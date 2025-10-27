@@ -1,7 +1,4 @@
 // thanks to yannis300307 for the extended eadk (most of this file)
-// thanks to fricht for their external data functions (indicated)
-
-use crate::constants::palette::*;
 
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -480,50 +477,11 @@ pub fn debug_info(text: &str, wait: usize) {
         text,
         Point { x: 10, y: 30 },
         false,
-        BLACK,
-        WHITE,
+        Color { rgb565: 0x000},
+        Color { rgb565: 0xfff }
     );
     timing::msleep(wait as u32);
 }
-
-pub fn header_info(text: &str) {
-    display::draw_string(
-        text,
-        Point { x: 5, y: 3 },
-        false,
-        WHITE,
-        ORANGE
-    );
-}
-
-// ===== credit to fricht =====
-#[cfg(feature = "obj")]
-pub fn get_data() -> &'static [u8] {
-    unsafe {
-        // SAFETY: The underlying pointer is provided by EADK. It is assumed to be
-        // non-null and valid for the entire duration of the application.
-        debug_assert!(!data.is_null());
-        core::slice::from_raw_parts(data, data_size)
-    }
-}
-
-#[cfg(feature = "obj")]
-// Interface with the raw `eadk` C api.
-//
-// If you don't know what you are doing, use the safe rust implementations.
-unsafe extern "C" {
-    // A pointer to the beginning of the external data slice.
-    //
-    // # Safety
-    // This pointer should always be used with `eadk::data_size`.
-    #[link_name = "eadk_external_data"]
-    pub static data: *const u8;
-
-    // The length of the external data slice.
-    #[link_name = "eadk_external_data_size"]
-    pub static data_size: usize;
-}
-// ============================
 
 unsafe extern "C" {
     pub static mut _heap_start: u8;
