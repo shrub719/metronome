@@ -1,3 +1,5 @@
+<center><img src="assets/repo_icon.png" height="100"></center>
+
 # Nwagotchi
 
 A virtual pet for your NumWorks calculator!
