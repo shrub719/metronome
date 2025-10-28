@@ -1,7 +1,7 @@
 <h1 align="center">
     <img src="assets/repo_icon.png" alt="Nwagotchi logo" height="150"> 
     <br />
-    Nwagotchi
+    Nwagotchi!
 </h1>
 
 A virtual pet for your NumWorks calculator!
