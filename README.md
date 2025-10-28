@@ -1,5 +1,5 @@
 <h1 align="center">
-    <img src="assets/repo_icon.png" alt="Nwagotchi logo" height="75rem"> 
+    <img src="assets/icons/icon_128.png" alt="Nwagotchi logo" height="100px"> 
     <br />
     Nwagotchi!
 </h1>

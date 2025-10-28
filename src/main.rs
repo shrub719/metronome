@@ -31,7 +31,7 @@ pub static EADK_APP_API_LEVEL: u32 = 0;
 #[used]
 #[cfg(target_os = "none")]
 #[unsafe(link_section = ".rodata.eadk_app_icon")]
-pub static EADK_APP_ICON: [u8; 4900] = *include_bytes!("../target/icon.nwi");
+pub static EADK_APP_ICON: [u8; 4509] = *include_bytes!("../target/icon.nwi");
 
 pub mod eadk;
 

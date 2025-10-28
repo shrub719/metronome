@@ -2,7 +2,7 @@ use std::process::Command;
 
 fn convert_icon() {
     let output = Command::new("nwlink")
-        .args(&["png-nwi", "assets/icon.png", "target/icon.nwi"])
+        .args(&["png-nwi", "assets/icons/icon_56.png", "target/icon.nwi"])
         .output().expect("Failure to launch process");
     assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
 }
