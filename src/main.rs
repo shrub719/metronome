@@ -35,6 +35,7 @@ pub static EADK_APP_ICON: [u8; 1654 ] = *include_bytes!("../target/icon.nwi");
 
 pub mod eadk;
 mod storage;
+mod animator;
 
 #[unsafe(no_mangle)]
 pub fn main() -> isize {

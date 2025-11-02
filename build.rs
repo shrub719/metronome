@@ -7,6 +7,10 @@ fn convert_icon() {
     assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
 }
 
+fn convert_sprite_sheet() {
+
+}
+
 // thanks to yannis300307 for build.rs compile_c_libs function
 fn compile_storage_c() {
     unsafe { std::env::set_var("CC", "arm-none-eabi-gcc") };
@@ -36,8 +40,11 @@ fn compile_storage_c() {
 }
 
 fn main() {
-    println!("cargo:rerun-if-changed=assets/icon.png");
+    println!("cargo:rerun-if-changed=assets/icons/icon_nwa.png");
     convert_icon();
+
+    println!("cargo:rerun-if-changed=assets/sprite_sheet.png");
+    convert_sprite_sheet();
 
     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "none" {
         compile_storage_c();
