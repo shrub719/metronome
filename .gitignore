@@ -1,6 +1,5 @@
-target
+target/
 .DS_Store
-.venv
+.venv/
 just.sh
-test
-sim
+simulator/
