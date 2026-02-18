@@ -4,14 +4,13 @@ sim_use!(std::collections::VecDeque);
 
 #[derive(Clone, Copy)]
 pub enum NoteClass {
-    Tap { x: f32 },
-    DoubleTap { x1: f32, x2: f32 },
+    Tap
 }
 
 #[derive(Clone, Copy)]
 pub struct Note {
     pub ms: u32,
-    pub class: NoteClass
+    pub x: f32
 }
 
 #[derive(Clone, Copy)]
@@ -30,4 +29,22 @@ pub struct Event {
 pub struct Map {
     pub notes: VecDeque<Note>,
     pub events: VecDeque<Event>
+}
+
+#[macro_export]
+macro_rules! note {
+    ($ms:expr, $x:expr) => {
+        Note { ms: $ms, x: $x }
+    };
+}
+
+#[macro_export]
+macro_rules! notes {
+    ( $( ($ms:expr, $x:expr) ),* $(,)? ) => {
+        vec![
+            $(
+                Note { ms: $ms, x: $x },
+            )*
+        ]
+    };
 }

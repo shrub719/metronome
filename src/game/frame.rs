@@ -38,10 +38,21 @@ impl Frame {
     }
 
     fn place_pixel(&mut self, x: usize, y: usize) {
+        if x > BUFFER_WIDTH { return };
+        if y > BUFFER_HEIGHT { return };
+
         let i = BUFFER_WIDTH*y + x;
-        
-        if i < BUFFER_SIZE {
-            self.buffer[i] = ORANGE;
+        if i > BUFFER_SIZE { return };
+        self.buffer[i] = ORANGE;
+    }
+
+    fn draw_circle(&mut self, x: usize, y: usize) {
+        for i in -10..10 {
+            let u = (x as isize + i) as usize;
+            for j in -10..10 {
+                let v = (y as isize + j) as usize;
+                if i * i + j * j < 100 { self.place_pixel(u, v) };
+            }
         }
     }
 
@@ -52,7 +63,7 @@ impl Frame {
         if (-dy) as usize > Y0 { return }  // shows up below line
         let y = (Y0 as isize + dy as isize) as usize;
 
-        self.place_pixel(x, y);
+        self.draw_circle(x, y);
     }
 }
 

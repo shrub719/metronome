@@ -70,6 +70,7 @@ pub mod spacing {
     pub const LANE_HEIGHT_F: f32 = LANE_HEIGHT as f32;
 
     // note positioning - y
+    // note: (haha) y = 0 is the TOP of the screen!!
     pub const Y0: usize = JUDGEMENT_LINE;
     pub const Y_RANGE: usize = LANE_HEIGHT - Y0;
     pub const Y_RANGE_F: f32 = Y_RANGE as f32;  // range ABOVE judgement line
