@@ -16,8 +16,10 @@ setup_allocator!();
 fn main() {
     init_heap!(); 
 
-    game::test();
-
-    crate::eadk::utils::wait_back_pressed();
+    use crate::game::game::Game;
+    let mut game = Game::new();
+    while !crate::eadk::utils::home_pressed() {
+        game.update();
+    }
 }
 

@@ -21,6 +21,10 @@ pub fn wait_back_pressed() {
     }
 }
 
+pub fn home_pressed() -> bool {
+    keyboard::KeyboardState::scan().key_down(keyboard::Key::Home)
+}
+
 /// Write debugging code to the screen.
 pub fn log(text: &[&str]) {
     for i in 0..text.len() {
