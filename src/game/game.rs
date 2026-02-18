@@ -1,11 +1,47 @@
 use crate::{
-    constants::*, game::{
-        frame::Frame, input::Input, map::{
+    constants::*, 
+    game::{
+        frame::Frame, 
+        input::Input, 
+        map::{
             NoteClass::*, *
-        }, timer::Timer
+        }, 
+        timer::Timer
     }, 
     maps::test::*
 };
+
+#[derive(Clone, Copy)]
+enum Judgement {
+    Perfect,
+    Great,
+    Good,
+    Miss
+}
+impl Judgement {
+    pub fn to_str(self) -> &'static str {
+        use Judgement::*;
+
+        match self {
+            Perfect => " perfect!    ",
+            Great => " great    ",
+            Good => " good    ",
+            Miss => " miss...    "
+        }
+    }
+    
+    pub fn from_offset(offset: i32) -> Judgement {
+        use Judgement::*;
+        use judgement::*;
+
+        match offset.abs() {
+            0..PERFECT => Perfect,
+            PERFECT..GREAT => Great,
+            GREAT..GOOD => Good,
+            _ => Miss
+        }
+    }
+}
 
 pub struct Game {
     timer: Timer,
@@ -36,6 +72,18 @@ impl Game {
         }
     }
 
+    fn display_judgement(jdg: Judgement) {
+        use crate::eadk::display;
+        use crate::constants::palette::*;
+
+        display::draw_string(
+            jdg.to_str(),
+            display::ScreenPoint::new(0, 0),
+            false,
+            WHITE, ORANGE
+        );
+    }
+
     fn judge(&mut self) {
         loop {
             if self.map.notes.is_empty() { break; } // FIX
@@ -44,6 +92,7 @@ impl Game {
             let ms_late = self.timer.ms as i32 - note.ms as i32;
             if ms_late > judgement::GOOD { 
                 self.map.notes.pop_front();
+                Game::display_judgement(Judgement::Miss);
             } else {
                 break;
             }
@@ -55,17 +104,13 @@ impl Game {
             let note = self.map.notes[0];
             let offset = self.timer.ms as i32 - note.ms as i32;
             
-            if offset.abs() <= judgement::MISS { self.map.notes.pop_front(); }
+            if offset.abs() <= judgement::MISS {
+                self.map.notes.pop_front();
 
-            use judgement::*;
-            let text = match offset {
-                0..PERFECT => "perfect!",
-                PERFECT..GREAT => "great",
-                GREAT..GOOD => "good",
-                _ => "miss :("
-            };
-
-            crate::eadk::utils::debug(offset);
+                let jdg = Judgement::from_offset(offset);
+                if matches!(jdg, Judgement::Miss) { self.map.notes.pop_front(); }
+                Game::display_judgement(jdg);
+            }
         }
     }
 

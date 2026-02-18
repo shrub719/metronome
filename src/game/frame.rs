@@ -20,6 +20,7 @@ impl Frame {
     }
     
     fn push_backdrop() {
+        push_rect_uniform(SCREEN_RECT, COLOR_BLACK);
         push_rect_uniform(BACKDROP_RECT, ORANGE);
     }
     
