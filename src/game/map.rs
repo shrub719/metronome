@@ -1,5 +1,6 @@
 use crate::eadk::display::Color565;
-calc_use!(alloc::vec::Vec);
+calc_use!(alloc::collections::vec_deque::VecDeque);
+sim_use!(std::collections::VecDeque);
 
 #[derive(Clone, Copy)]
 pub enum NoteClass {
@@ -27,6 +28,6 @@ pub struct Event {
 }
 
 pub struct Map {
-    pub notes: Vec<Note>,
-    pub events: Vec<Event>
+    pub notes: VecDeque<Note>,
+    pub events: VecDeque<Event>
 }

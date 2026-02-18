@@ -19,7 +19,7 @@ pub fn create_test_map() -> Map {
                 ms: 5000,
                 class: Tap { x: 0.7 }
             }
-        ),
-        events: vec!()
+        ).into(),
+        events: vec!().into()
     }
 }

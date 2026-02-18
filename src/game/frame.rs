@@ -1,5 +1,9 @@
 use crate::{
-    constants::*, 
+    constants::{
+        spacing::*,
+        display::*,
+        palette::*
+    }, 
     eadk::display::*
 };
 calc_use!(alloc::boxed::Box);
@@ -9,6 +13,7 @@ pub struct Frame {
 }
 impl Frame {
     pub fn new() -> Self {
+        Self::push_backdrop();
         Self {
             buffer: Box::new([BLACK; BUFFER_SIZE])
         }
@@ -20,7 +25,11 @@ impl Frame {
     
     pub fn reset(&mut self) {
         for i in 0..BUFFER_SIZE {
-            self.buffer[i] = BLACK;
+            if BUFFER_WIDTH*JUDGEMENT_LINE <= i && i < BUFFER_WIDTH*(JUDGEMENT_LINE+1) {
+                self.buffer[i] = WHITE;
+            } else {
+                self.buffer[i] = BLACK;
+            }
         }
     }
 
@@ -28,7 +37,7 @@ impl Frame {
         push_rect(GAME_RECT, &*self.buffer);
     }
 
-    fn blue_pixel(&mut self, x: usize, y: usize) {
+    fn place_pixel(&mut self, x: usize, y: usize) {
         let i = BUFFER_WIDTH*y + x;
         
         if i < BUFFER_SIZE {
@@ -36,14 +45,14 @@ impl Frame {
         }
     }
 
-    pub fn setup() {
-        Self::push_backdrop();
-    }
+    pub fn draw_note(&mut self, normalised_x: f32, ms_until: i32) {
+        let x = X0 + (X_RANGE_F * normalised_x) as usize;
 
-    pub fn draw_note(&mut self, x: f32, y: f32) {
-        let u = LANE_START + (LANE_RANGE_F * x) as usize;
-        let v = (LANE_HEIGHT_F * (1.0 - y)) as usize;
-        self.blue_pixel(u, v);
+        let dy = PX_PER_MS * ms_until as f32;
+        if (-dy) as usize > Y0 { return }  // shows up below line
+        let y = (Y0 as isize + dy as isize) as usize;
+
+        self.place_pixel(x, y);
     }
 }
 
