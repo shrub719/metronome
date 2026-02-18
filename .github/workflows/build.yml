@@ -48,10 +48,10 @@ jobs:
       - name: Build nwa
         run: |
           just build
-          mv target/thumbv7em-none-eabihf/release/nwagotchi target/output/nwagotchi.nwa
+          mv target/thumbv7em-none-eabihf/release/metronome target/output/metronome.nwa
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: nwagotchi_build
+          name: metronome_build
           path: target/output/*

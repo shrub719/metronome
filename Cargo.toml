@@ -1,16 +1,16 @@
 cargo-features = ["profile-rustflags"]
 [package]
-name = "nwagotchi"
+name = "metronome"
 version = "0.0.0"
 authors = ["shrub719"]
 edition = "2024"
 
 [[bin]]
-name = "nwagotchi"
+name = "metronome"
 path = "src/main.rs"
 
 [lib]
-name = "nwagotchi"
+name = "metronome"
 path = "src/main.rs"
 crate-type = ["cdylib"]
 
