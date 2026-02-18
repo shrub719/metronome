@@ -24,9 +24,9 @@ macro_rules! setup_allocator {
         use cortex_m;
 
         #[cfg(target_os = "none")]
-        use crate::eadk::adresses::HEAP_START;
+        use crate::eadk::addresses::HEAP_START;
         #[cfg(target_os = "none")]
-        use eadk::adresses::heap_size;
+        use eadk::addresses::heap_size;
         #[cfg(target_os = "none")]
         use embedded_alloc::LlffHeap as Heap;
 
