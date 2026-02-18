@@ -23,10 +23,21 @@ impl Frame {
         push_rect_uniform(BACKDROP_RECT, ORANGE);
     }
     
-    pub fn reset(&mut self) {
+    fn clear(&mut self) {
         for x in &mut *self.buffer {
             *x = BLACK;
         }
+    }
+
+    fn draw_judgement_line(&mut self) {
+        for x in &mut (*self.buffer)[BUFFER_WIDTH*JUDGEMENT_LINE..BUFFER_WIDTH*(JUDGEMENT_LINE+1)] {
+            *x = WHITE;
+        }
+    }
+
+    pub fn reset(&mut self) {
+        self.clear();
+        self.draw_judgement_line();
     }
 
     pub fn push(&self) {
