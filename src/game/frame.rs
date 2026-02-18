@@ -47,11 +47,11 @@ impl Frame {
     }
 
     fn draw_circle(&mut self, x: usize, y: usize) {
-        for i in -10..10 {
+        for i in -NOTE_RADIUS_I..NOTE_RADIUS_I {
             let u = (x as isize + i) as usize;
-            for j in -10..10 {
+            for j in -NOTE_RADIUS_I..NOTE_RADIUS_I {
                 let v = (y as isize + j) as usize;
-                if i * i + j * j < 100 { self.place_pixel(u, v) };
+                if i * i + j * j < NOTE_RADIUS_I * NOTE_RADIUS_I { self.place_pixel(u, v) };
             }
         }
     }
@@ -60,8 +60,7 @@ impl Frame {
         let x = X0 + (X_RANGE_F * normalised_x) as usize;
 
         let dy = PX_PER_MS * ms_until as f32;
-        if (-dy) as usize > Y0 { return }  // shows up below line
-        let y = (Y0 as isize + dy as isize) as usize;
+        let y = (Y0 as isize - dy as isize) as usize;
 
         self.draw_circle(x, y);
     }
