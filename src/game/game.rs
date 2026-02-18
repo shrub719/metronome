@@ -1,15 +1,10 @@
 use crate::{
-    game::{
-        timer::Timer,
-        input::Input,
-        frame::Frame,
-        map::{
-            *,
-            NoteClass::*
-        }
-    },
-    constants::*,
-    maps::test::create_test_map
+    constants::*, game::{
+        frame::Frame, input::Input, map::{
+            NoteClass::*, *
+        }, timer::Timer
+    }, 
+    maps::test::*
 };
 
 pub struct Game {
@@ -24,7 +19,7 @@ impl Game {
             timer: Timer::new(),
             input: Input::new(),
             frame: Frame::new(),
-            map: create_test_map()
+            map: polyrhythms()
         }
     }
 
@@ -46,8 +41,35 @@ impl Game {
     }
 
     fn judge(&mut self) {
+        loop {
+            if self.map.notes.is_empty() { break; } // FIX
+
+            let note = self.map.notes[0];
+            let ms_late = self.timer.ms as i32 - note.ms as i32;
+            if ms_late > judgement::GOOD { 
+                self.map.notes.pop_front();
+            } else {
+                break;
+            }
+        }
+
         for _ in 0..self.input.n_hits {
+            if self.map.notes.is_empty() { break; } // FIX
+
+            let note = self.map.notes[0];
+            let offset = note.ms as i32 - self.timer.ms as i32;
             
+            if offset.abs() <= judgement::MISS { self.map.notes.pop_front(); }
+
+            use judgement::*;
+            let text = match offset {
+                0..PERFECT => "perfect!",
+                PERFECT..GREAT => "great",
+                GREAT..GOOD => "good",
+                _ => "miss :("
+            };
+
+            crate::eadk::utils::debug(offset);
         }
     }
 

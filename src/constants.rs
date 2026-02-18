@@ -38,10 +38,10 @@ pub mod judgement {
     use super::*;
 
     // editable
-    pub const PERFECT: u32 = 22;
-    pub const GREAT: u32 = 45;
-    pub const GOOD: u32 = 90;
-    pub const MISS: u32 = 180;  // maximum time before an early hit counts as a miss
+    pub const PERFECT: i32 = 22;
+    pub const GREAT: i32 = 45;
+    pub const GOOD: i32 = 90;
+    pub const MISS: i32 = 180;  // maximum time before an early hit counts as a miss
     
     pub const DRAW_AHEAD_MS: i32 = (spacing::Y_RANGE_F / spacing::PX_PER_MS) as i32;
 }
@@ -56,7 +56,7 @@ pub mod spacing {
     // editable
     pub const NOTE_RADIUS: usize = 10;      // yeah
     pub const JUDGEMENT_LINE_HEIGHT: usize = 25;   // height of judgement line above bottom
-    pub const PX_PER_MS: f32 = 0.5;         // essentially scroll speed
+    pub const PX_PER_MS: f32 = 0.4;         // essentially scroll speed
 
     // buffer
     pub const BUFFER_WIDTH: usize = display::GAME_WIDTH as usize;

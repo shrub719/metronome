@@ -24,12 +24,8 @@ impl Frame {
     }
     
     pub fn reset(&mut self) {
-        for i in 0..BUFFER_SIZE {
-            if BUFFER_WIDTH*JUDGEMENT_LINE <= i && i < BUFFER_WIDTH*(JUDGEMENT_LINE+1) {
-                self.buffer[i] = WHITE;
-            } else {
-                self.buffer[i] = BLACK;
-            }
+        for x in &mut *self.buffer {
+            *x = BLACK;
         }
     }
 
