@@ -21,8 +21,8 @@ fn write_wrapped(text: &str, limit: usize) {
                     y: (10 + 20 * line_count) as u16,
                 },
                 false,
-                Color565::from_rgb888(0, 0, 0),
-                Color565::from_rgb888(255, 0, 0),
+                Color565::from_rgb(0, 0, 0),
+                Color565::from_rgb(255, 0, 0),
             );
             line.clear();
             line_count += 1;
@@ -40,7 +40,7 @@ fn panic(panic: &PanicInfo<'_>) -> ! {
             width: 320,
             height: 240,
         },
-        Color565::from_rgb888(255, 0, 0),
+        Color565::from_rgb(255, 0, 0),
     ); // Show a red screen
 
     write_wrapped(format!("{}", panic).as_str(), 42);

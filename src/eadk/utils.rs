@@ -17,8 +17,8 @@ pub fn log(text: &[&str]) {
             text[i],
             display::ScreenPoint::new(5, 5 + 14 * i as u16 as u16),
             false,
-            display::Color565::from_rgb888(255, 255, 255),
-            display::Color565::from_rgb888(0, 0, 0),
+            display::Color565::from_rgb(255, 255, 255),
+            display::Color565::from_rgb(0, 0, 0),
         );
     }
 }

@@ -28,10 +28,10 @@ nwb-dev:
 # run dev profile on simulator
 [macos]
 nwb-dev-run: nwb-dev
-    ./sim/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/debug/libmetronome.dylib
+    ./simulator/epsilon.app/Contents/MacOS/Epsilon --nwb ./target/{{current_target}}/debug/libmetronome.dylib
 [linux]
 nwb-dev-run: nwb-dev
-    ./sim/epsilon.bin --nwb ./target/{{current_target}}/debug/libmetronome.so
+    ./simulator/epsilon.bin --nwb ./target/{{current_target}}/debug/libmetronome.so
 
 
 # ===== UTILS =====

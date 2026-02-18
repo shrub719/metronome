@@ -12,11 +12,11 @@ pub const SCREEN_RECT: ScreenRect = ScreenRect {
     width: 320,
     height: 240,
 };
-pub const COLOR_BLACK: Color565 = Color565::from_rgb888(0, 0, 0);
-pub const COLOR_WHITE: Color565 = Color565::from_rgb888(255, 255, 255);
-pub const COLOR_RED: Color565 = Color565::from_rgb888(255, 0, 0);
-pub const COLOR_GREEN: Color565 = Color565::from_rgb888(0, 255, 0);
-pub const COLOR_BLUE: Color565 = Color565::from_rgb888(0, 0, 255);
+pub const COLOR_BLACK: Color565 = Color565::from_rgb(0, 0, 0);
+pub const COLOR_WHITE: Color565 = Color565::from_rgb(255, 255, 255);
+pub const COLOR_RED: Color565 = Color565::from_rgb(255, 0, 0);
+pub const COLOR_GREEN: Color565 = Color565::from_rgb(0, 255, 0);
+pub const COLOR_BLUE: Color565 = Color565::from_rgb(0, 0, 255);
 
 /// The color format of the screen. Encoded with 16 bits (or 2 bytes). 5 bits are used for red, 6 for green and 5 for blue.
 #[repr(C)]
@@ -36,7 +36,7 @@ impl Color565 {
 
     /// Convert a RGB 888 (standard rgb) to RGB 565.
     #[inline]
-    pub const fn from_rgb888(r: u16, g: u16, b: u16) -> Color565 {
+    pub const fn from_rgb(r: u16, g: u16, b: u16) -> Color565 {
         Color565 {
             value: ((r & 0b11111000) << 8) | ((g & 0b11111100) << 3) | (b >> 3),
         }

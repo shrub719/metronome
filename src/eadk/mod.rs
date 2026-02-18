@@ -22,7 +22,7 @@ pub mod keyboard;
 pub mod panic_handler;
 
 /// Provide addresses to low level stuff.
-pub mod adresses;
+pub mod addresses;
 
 // Provide high level access to the OS' storage. Contains bindings for Yaya.cout's storage.c lib. Also works on simulator.
 pub mod storage;
