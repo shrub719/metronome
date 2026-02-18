@@ -2,10 +2,21 @@ use crate::eadk::{display, keyboard, time};
 calc_use!(alloc::string::String);
 calc_use!(alloc::vec::Vec);
 
+calc_use!(core::fmt::Display);
+sim_use!(std::fmt::Display);
+
+calc_use!(alloc::format);
+
 /// Wait until Ok is released.
 /// This function should be added at the beginning of the program because your it could handle the "Ok" that started the app. 
 pub fn wait_ok_released() {
     while keyboard::KeyboardState::scan().key_down(keyboard::Key::Ok) {
+        time::wait_milliseconds(50);
+    }
+}
+
+pub fn wait_back_pressed() {
+    while !keyboard::KeyboardState::scan().key_down(keyboard::Key::Back) {
         time::wait_milliseconds(50);
     }
 }
@@ -21,6 +32,16 @@ pub fn log(text: &[&str]) {
             display::Color565::from_rgb(0, 0, 0),
         );
     }
+}
+
+pub fn debug<T: Display>(val: T) {
+    display::draw_string(
+        &format!("{}", val),
+        display::ScreenPoint::new(0, 0),
+        false,
+        display::Color565::from_rgb(255, 255, 255),
+        display::Color565::from_rgb(0, 0, 0),
+    );
 }
 
 /// Refresh the simulator screen and prevent it from craching.
