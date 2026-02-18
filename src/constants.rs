@@ -41,7 +41,7 @@ pub mod judgement {
     pub const PERFECT: i32 = 22;
     pub const GREAT: i32 = 45;
     pub const GOOD: i32 = 90;
-    pub const MISS: i32 = 180;  // maximum time before an early hit counts as a miss
+    pub const MISS: i32 = 135;  // maximum time before an early hit counts as a miss
     
     pub const DRAW_AHEAD_MS: i32 = (spacing::Y_RANGE_F / spacing::PX_PER_MS) as i32;
 }
