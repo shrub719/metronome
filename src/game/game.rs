@@ -20,7 +20,6 @@ pub struct Game {
 }
 impl Game {
     pub fn new() -> Self {
-        Frame::setup();
         Self {
             timer: Timer::new(),
             input: Input::new(),
@@ -34,9 +33,21 @@ impl Game {
 
         let mut i = 0;
         while i < self.map.notes.len() {
-            let note = self.map.notes.[i];
-            
-            let delta_ms = note.ms - self.timer.ms;
+            let note = self.map.notes[i];
+            i += 1;
+
+            let ms_until: i32 = note.ms as i32 - self.timer.ms as i32;    
+            if ms_until > judgement::DRAW_AHEAD_MS { break } // gone too far
+
+            match note.class {
+                Tap { x } => {
+                    self.frame.draw_note(x, ms_until);
+                },
+                DoubleTap { x1, x2 } => {
+                    self.frame.draw_note(x1, ms_until);
+                    self.frame.draw_note(x2, ms_until);
+                }
+            };
         }
 
         self.frame.push();
