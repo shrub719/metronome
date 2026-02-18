@@ -55,7 +55,7 @@ impl Game {
             timer: Timer::new(),
             input: Input::new(),
             frame: Frame::new(),
-            map: polyrhythms()
+            map: test()
         }
     }
 
@@ -108,7 +108,6 @@ impl Game {
                 self.map.notes.pop_front();
 
                 let jdg = Judgement::from_offset(offset);
-                if matches!(jdg, Judgement::Miss) { self.map.notes.pop_front(); }
                 Game::display_judgement(jdg);
             }
         }
