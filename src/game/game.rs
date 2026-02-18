@@ -24,8 +24,6 @@ impl Game {
     }
 
     fn draw_notes(&mut self) {
-        self.frame.reset();
-
         let mut i = 0;
         while i < self.map.notes.len() {
             let note = self.map.notes[i];
@@ -36,8 +34,6 @@ impl Game {
 
             self.frame.draw_note(note.x, ms_until);
         }
-
-        self.frame.push();
     }
 
     fn judge(&mut self) {
@@ -57,7 +53,7 @@ impl Game {
             if self.map.notes.is_empty() { break; } // FIX
 
             let note = self.map.notes[0];
-            let offset = note.ms as i32 - self.timer.ms as i32;
+            let offset = self.timer.ms as i32 - note.ms as i32;
             
             if offset.abs() <= judgement::MISS { self.map.notes.pop_front(); }
 
@@ -79,6 +75,8 @@ impl Game {
 
         self.judge(); 
 
+        self.frame.reset();
         self.draw_notes();
+        self.frame.push();
     }
 }
