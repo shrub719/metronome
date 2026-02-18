@@ -55,7 +55,7 @@ pub mod spacing {
     
     // editable
     pub const NOTE_RADIUS: usize = 10;      // yeah
-    pub const JUDGEMENT_LINE: usize = 25;   // height of judgement line above bottom
+    pub const JUDGEMENT_LINE_HEIGHT: usize = 25;   // height of judgement line above bottom
     pub const PX_PER_MS: f32 = 0.5;         // essentially scroll speed
 
     // buffer
@@ -71,8 +71,9 @@ pub mod spacing {
 
     // note positioning - y
     // note: (haha) y = 0 is the TOP of the screen!!
+    pub const JUDGEMENT_LINE: usize = LANE_HEIGHT - JUDGEMENT_LINE_HEIGHT;
     pub const Y0: usize = JUDGEMENT_LINE;
-    pub const Y_RANGE: usize = LANE_HEIGHT - Y0;
+    pub const Y_RANGE: usize = Y0;
     pub const Y_RANGE_F: f32 = Y_RANGE as f32;  // range ABOVE judgement line
 
     // note positioning - x
@@ -80,6 +81,8 @@ pub mod spacing {
     pub const X0: usize = X_PADDING + NOTE_RADIUS;
     pub const X_RANGE: usize = BUFFER_WIDTH - 2 * (X_PADDING + NOTE_RADIUS);
     pub const X_RANGE_F: f32 = X_RANGE as f32;
+
+    pub const NOTE_RADIUS_I: isize = NOTE_RADIUS as isize;
 }
 
 // colors
