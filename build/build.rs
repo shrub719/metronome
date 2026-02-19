@@ -29,7 +29,7 @@ fn convert_map(input: &str, output: &str) {
                 bin.write_all(b"t").unwrap();
                 bin.write_all(&ms.to_le_bytes()).unwrap();
                 bin.write_all(&x.to_le_bytes()).unwrap();
-                bin.write_all(b"dead").unwrap();
+                bin.write_all(b"beef").unwrap();
 
             },
             "h" => {
@@ -55,7 +55,7 @@ fn convert_maps() {
         let path = entry.unwrap().path();
 
         if path.extension().and_then(|s| s.to_str()) == Some("txt") {
-            println!("cargo:rerun-if-changed={}", path.display());
+            // println!("cargo:rerun-if-changed={}", path.display());
 
             let filename = path.file_stem().unwrap().to_str().unwrap();
             let output = Path::new(&out_dir).join(format!("{filename}.bin"));
@@ -97,6 +97,7 @@ fn main() {
     println!("cargo:rerun-if-changed=assets/icons/icon_nwa.png");
     convert_icon();
 
+    println!("cargo:rerun-if-changed=NULL");    // hack
     convert_maps();
 
     if std::env::var("CARGO_CFG_TARGET_OS").unwrap() == "none" {
