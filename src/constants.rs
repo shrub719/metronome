@@ -42,6 +42,10 @@ pub mod judgement {
     pub const GREAT: i32 = 45;
     pub const GOOD: i32 = 90;
     pub const MISS: i32 = 135;      // maximum time before an early hit counts as a miss
+    pub const PERFECT_SCORE: u32 = 100;
+    pub const GREAT_SCORE: u32 = 75;
+    pub const GOOD_SCORE: u32 = 30;
+    pub const MISS_SCORE: u32 = 0;
     pub const MAX_HITS: u8 = 3;  // max number of hits detected per frame
     
     pub const DRAW_AHEAD_MS: i32 = (spacing::Y_RANGE_F / spacing::PX_PER_MS) as i32;
