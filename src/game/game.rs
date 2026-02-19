@@ -9,7 +9,7 @@ use crate::{
 };
 
 #[derive(Clone, Copy)]
-enum Judgement {
+pub enum Judgement {
     Perfect,
     Great,
     Good,
@@ -20,10 +20,10 @@ impl Judgement {
         use Judgement::*;
 
         match self {
-            Perfect => " perfect!    ",
-            Great => " great       ",
-            Good => " good        ",
-            Miss => " miss...     "
+            Perfect => "perfect!",
+            Great => "great   ",
+            Good => "good    ",
+            Miss => "miss... "
         }
     }
     
@@ -81,7 +81,7 @@ impl Game {
             let ms_until: i32 = note.ms as i32 - self.timer.ms as i32;    
             if ms_until > judgement::DRAW_AHEAD_MS { break } // looking too far
 
-            self.frame.draw_note(note.x, ms_until);
+            self.frame.draw_tap(note.x, ms_until);
 
             match note.class {
                 NoteClass::Hold { ms_end } => {
@@ -102,25 +102,8 @@ impl Game {
     }
 
     fn register_judgement(&mut self, jdg: Judgement) {
-        // temp judgement display
-        use crate::eadk;
-        use crate::constants::palette::*;
-        calc_use!(alloc::format);
-
         self.score += jdg.to_score();
-
-        eadk::display::draw_string(
-            jdg.to_str(),
-            eadk::display::ScreenPoint::new(0, display::TEXT_Y),
-            false,
-            WHITE, ORANGE
-        );
-        eadk::display::draw_string(
-            &format!("{} ", self.score),
-            eadk::display::ScreenPoint::new(display::TEXT_X, 0),
-            false,
-            WHITE, ORANGE
-        );
+        Frame::draw_judgement(jdg, self.score);
     }
 
     fn judge(&mut self) {
