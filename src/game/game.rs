@@ -85,18 +85,18 @@ impl Game {
             self.frame.draw_note(note.x, ms_until);
 
             match note.class {
-                NoteClass::Hold { duration } => {
-                    let end = ms_until + duration as i32;
-                    self.frame.draw_hold(note.x, ms_until, end);
+                NoteClass::Hold { ms_end } => {
+                    let ms_until_end = ms_end as i32 - self.timer.ms as i32;
+                    self.frame.draw_hold(note.x, ms_until, ms_until_end);
                 },
                 _ => ()
             };
         }
 
         match self.hold {
-            Some(Note { ms, x, class: NoteClass::Hold { duration } }) => {
-                let end = (ms + duration) as i32 - self.timer.ms as i32;   // uhhh need so much i32?
-                self.frame.draw_hold(x, 0, end)
+            Some(Note { ms, x, class: NoteClass::Hold { ms_end } }) => {
+                let ms_until_end =  ms_end as i32 - self.timer.ms as i32;   // uhhh need so much i32?
+                self.frame.draw_hold(x, 0, ms_until_end)
             }
             _ => ()
         };
@@ -141,8 +141,8 @@ impl Game {
 
         // check hold notes
         match self.hold {
-            Some(Note { ms, x: _, class: NoteClass::Hold { duration } }) => {  // i cannot BELIEVE this works
-                if self.timer.ms > ms + duration {
+            Some(Note { ms, x: _, class: NoteClass::Hold { ms_end } }) => {  // i cannot BELIEVE this works
+                if self.timer.ms > ms_end {
                     self.hold = None;
                     self.register_judgement(Judgement::Perfect);
                 } else if !self.input.holding {
@@ -166,7 +166,7 @@ impl Game {
                 let jdg = Judgement::from_offset(offset);
                 
                 if !matches!(jdg, Judgement::Miss) {
-                    if matches!(note.class, NoteClass::Hold { duration: _ }) {
+                    if matches!(note.class, NoteClass::Hold { ms_end: _ }) {
                         self.hold = Some(note);
                     }
                 }

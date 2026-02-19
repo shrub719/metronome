@@ -5,7 +5,7 @@ sim_use!(std::collections::VecDeque);
 #[derive(Clone, Copy)]
 pub enum NoteClass {
     Tap,
-    Hold { duration: u32 }
+    Hold { ms_end: u32 }
 }
 
 #[derive(Clone, Copy)]
@@ -44,11 +44,11 @@ macro_rules! note {
         }
     };
 
-    (hold, $ms:expr, $x:expr, $dur:expr) => {
+    (hold, $ms:expr, $x:expr, $end:expr) => {
         Note {
             ms: $ms,
             x: $x,
-            class: NoteClass::Hold { duration: $dur },
+            class: NoteClass::Hold { ms_end: $end },
         }
     };
 }
