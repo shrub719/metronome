@@ -33,8 +33,8 @@ pub mod display {
     };
 
     // judgement
-    pub const TEXT_HEIGHT: u16 = 14;
-    pub const TEXT_PADDING: u16 = 7;
+    pub const TEXT_HEIGHT: u16 = 20;
+    pub const TEXT_PADDING: u16 = 5;
     pub const UI_JUDGEMENT_Y: u16 = SCREEN_HEIGHT - TEXT_HEIGHT;
     pub const UI_JUDGEMENT_WIDTH: u16 = BACKDROP_MARGIN;
     pub const UI_SCORE_X: u16 = GAME_MARGIN + GAME_WIDTH + BORDER_SIZE;
@@ -57,7 +57,7 @@ pub mod display {
         x: TEXT_PADDING, y: UI_JUDGEMENT_Y
     };
     pub const UI_SCORE_POINT: ScreenPoint = ScreenPoint {
-        x: UI_SCORE_X + TEXT_PADDING - BORDER_SIZE, y: 0
+        x: UI_SCORE_X + TEXT_PADDING, y: 0
     };
 }
 
