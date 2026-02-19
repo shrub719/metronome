@@ -13,10 +13,10 @@ pub mod display {
     pub const SCREEN_HEIGHT: u16 = 240;
 
     // game rect
-    pub const MARGIN: u16 = (SCREEN_WIDTH - GAME_WIDTH) / 2;
+    pub const GAME_MARGIN: u16 = (SCREEN_WIDTH - GAME_WIDTH) / 2;
 
     pub const GAME_RECT: ScreenRect = ScreenRect {
-        x: MARGIN,
+        x: GAME_MARGIN,
         y: 0,
         width: GAME_WIDTH,
         height: SCREEN_HEIGHT
@@ -32,9 +32,33 @@ pub mod display {
         height: SCREEN_HEIGHT
     };
 
-    // judgement (temp?)
-    pub const TEXT_Y: u16 = 226;
-    pub const TEXT_X: u16 = MARGIN + GAME_WIDTH + BORDER_SIZE;
+    // judgement
+    pub const TEXT_HEIGHT: u16 = 14;
+    pub const TEXT_PADDING: u16 = 7;
+    pub const UI_JUDGEMENT_Y: u16 = SCREEN_HEIGHT - TEXT_HEIGHT;
+    pub const UI_JUDGEMENT_WIDTH: u16 = BACKDROP_MARGIN;
+    pub const UI_SCORE_X: u16 = GAME_MARGIN + GAME_WIDTH + BORDER_SIZE;
+    pub const UI_SCORE_WIDTH: u16 = BACKDROP_MARGIN;
+
+    pub const UI_JUDGEMENT_RECT: ScreenRect = ScreenRect {
+        x: 0,
+        y: UI_JUDGEMENT_Y,
+        width: UI_JUDGEMENT_WIDTH,
+        height: TEXT_HEIGHT
+    };
+    pub const UI_SCORE_RECT: ScreenRect = ScreenRect {
+        x: UI_SCORE_X,
+        y: 0,
+        width: UI_SCORE_WIDTH,
+        height: TEXT_HEIGHT
+    };
+
+    pub const UI_JUDGEMENT_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: UI_JUDGEMENT_Y
+    };
+    pub const UI_SCORE_POINT: ScreenPoint = ScreenPoint {
+        x: UI_SCORE_X + TEXT_PADDING - BORDER_SIZE, y: 0
+    };
 }
 
 // judgement times
