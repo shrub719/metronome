@@ -17,14 +17,15 @@ pub struct Note {
 
 #[derive(Clone, Copy)]
 pub enum EventClass {
-    Backlight { fraction: f32, duration: u32 },
-    Shake,
-    BGColor { color: Color565, duration: u32 }
+    // Backlight { fraction: f32, duration: u32 },
+    Shift { displacement: i16 },
+    BGColor { color: Color565 }  // this pleases me
 }
 
 #[derive(Clone, Copy)]
 pub struct Event {
     pub ms: u32,
+    pub duration: u32,
     pub class: EventClass
 }
 
@@ -48,6 +49,25 @@ macro_rules! note {
             ms: $ms,
             x: $x,
             class: NoteClass::Hold { duration: $dur },
+        }
+    };
+}
+
+#[macro_export]
+macro_rules! event {
+    (shift, $ms:expr, $dur:expr, $dis:expr) => {
+        Event {
+            ms: $ms,
+            duration: $dur,
+            class: EventClass::Shift { displacement: $dis },
+        }
+    };
+
+    (bg, $ms:expr, $dur:expr, $r:expr, $g:expr, $b:expr) => {
+        Event {
+            ms: $ms,
+            duration: $dur,
+            class: EventClass::BGColor { color: Color565::from_rgb($r, $g, $b) }
         }
     };
 }
