@@ -104,17 +104,27 @@ impl Game {
 
     fn register_judgement(&mut self, jdg: Judgement) {
         // temp judgement display
-        use crate::eadk::display;
+        use crate::eadk;
         use crate::constants::palette::*;
+        calc_use!(alloc::format);
 
-        display::draw_string(
+        self.score += jdg.to_score();
+
+        eadk::display::draw_string(
             jdg.to_str(),
-            display::ScreenPoint::new(0, 0),
+            eadk::display::ScreenPoint::new(0, 0),
             false,
             WHITE, ORANGE
         );
-
-        self.score += jdg.to_score();
+        eadk::display::draw_string(
+            &format!("{} ", self.score),
+            eadk::display::ScreenPoint::new(
+                display::MARGIN + display::GAME_WIDTH + display::BORDER_SIZE, 
+                0
+            ),
+            false,
+            WHITE, ORANGE
+        );
     }
 
     fn judge(&mut self) {
