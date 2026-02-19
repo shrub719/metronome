@@ -112,16 +112,13 @@ impl Game {
 
         eadk::display::draw_string(
             jdg.to_str(),
-            eadk::display::ScreenPoint::new(0, 0),
+            eadk::display::ScreenPoint::new(0, display::TEXT_Y),
             false,
             WHITE, ORANGE
         );
         eadk::display::draw_string(
             &format!("{} ", self.score),
-            eadk::display::ScreenPoint::new(
-                display::MARGIN + display::GAME_WIDTH + display::BORDER_SIZE, 
-                0
-            ),
+            eadk::display::ScreenPoint::new(display::TEXT_X, 0),
             false,
             WHITE, ORANGE
         );
