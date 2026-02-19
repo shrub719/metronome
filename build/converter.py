@@ -16,6 +16,7 @@ def read_osu(file):
         type_flags = int(parts[3])
         ms_end = int(parts[5].split(":")[0])
 
+        # FIX: only works for specific 4k maps
         if osu_x == 64: x = 0.0
         if osu_x == 192: x = 0.333
         if osu_x == 320: x = 0.666

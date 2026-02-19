@@ -1,0 +1,8 @@
+# i think the cpu clock might be EVER so slightly slow
+
+t 1000 0.0
+t 1500 0.25
+t 2000 0.5
+t 2500 0.75
+t 3000 1.0
+t 100000 0.5
