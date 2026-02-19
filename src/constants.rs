@@ -31,6 +31,10 @@ pub mod display {
         width: BACKDROP_WIDTH,
         height: SCREEN_HEIGHT
     };
+
+    // judgement (temp?)
+    pub const TEXT_Y: u16 = 226;
+    pub const TEXT_X: u16 = MARGIN + GAME_WIDTH + BORDER_SIZE;
 }
 
 // judgement times
