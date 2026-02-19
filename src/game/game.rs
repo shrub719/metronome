@@ -28,6 +28,18 @@ impl Judgement {
         }
     }
     
+    pub fn to_score(self) -> u32 {
+        use Judgement::*;
+        use judgement::*;
+
+        match self {
+            Perfect => PERFECT_SCORE,
+            Great => GREAT_SCORE,
+            Good => GOOD_SCORE,
+            Miss => MISS_SCORE
+        }
+    }
+    
     pub fn from_offset(offset: i32) -> Judgement {
         use Judgement::*;   // the enum variants
         use judgement::*;   // the timing constants
@@ -46,6 +58,7 @@ pub struct Game {
     input: Input,
     frame: Frame,
     hold: Option<Note>,
+    score: u32,
     map: Map
 }
 impl Game {
@@ -55,6 +68,7 @@ impl Game {
             input: Input::new(),
             frame: Frame::new(),
             hold: None,
+            score: 0,
             map: test()
         }
     }
@@ -88,7 +102,8 @@ impl Game {
         };
     }
 
-    fn display_judgement(jdg: Judgement) {
+    fn register_judgement(&mut self, jdg: Judgement) {
+        // temp judgement display
         use crate::eadk::display;
         use crate::constants::palette::*;
 
@@ -98,6 +113,8 @@ impl Game {
             false,
             WHITE, ORANGE
         );
+
+        self.score += jdg.to_score();
     }
 
     fn judge(&mut self) {
@@ -109,7 +126,7 @@ impl Game {
             let ms_late = self.timer.ms as i32 - note.ms as i32;
             if ms_late > judgement::GOOD { 
                 self.map.notes.pop_front();
-                Game::display_judgement(Judgement::Miss);
+                self.register_judgement(Judgement::Miss);
             } else {
                 break;
             }
@@ -120,10 +137,10 @@ impl Game {
             Some(Note { ms, x: _, class: NoteClass::Hold { duration } }) => {  // i cannot BELIEVE this works
                 if self.timer.ms > ms + duration {
                     self.hold = None;
-                    Game::display_judgement(Judgement::Perfect);
+                    self.register_judgement(Judgement::Perfect);
                 } else if !self.input.holding {
                     self.hold = None;
-                    Game::display_judgement(Judgement::Miss);
+                    self.register_judgement(Judgement::Miss);
                 }
             },
             _ => ()
@@ -147,7 +164,7 @@ impl Game {
                     }
                 }
 
-                Game::display_judgement(jdg);
+                self.register_judgement(jdg);
             }
         }
     }
