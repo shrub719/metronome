@@ -28,8 +28,8 @@ impl Frame {
         push_rect_uniform(UI_JUDGEMENT_RECT, ORANGE);
         push_rect_uniform(UI_SCORE_RECT, ORANGE);
 
-        draw_string("ready?", UI_JUDGEMENT_POINT, false, WHITE, ORANGE);
-        draw_string("0", UI_SCORE_POINT, false, WHITE, ORANGE);
+        draw_string("ready?", UI_JUDGEMENT_POINT, true, WHITE, ORANGE);
+        draw_string("0", UI_SCORE_POINT, true, WHITE, ORANGE);
     }
     
     fn clear(&mut self) {
@@ -57,14 +57,12 @@ impl Frame {
         draw_string(
             &jdg.to_str(),
             UI_JUDGEMENT_POINT,
-            false,
-            WHITE, ORANGE
+            true, WHITE, ORANGE
         );
         draw_string(
             &score.to_string(),
             UI_SCORE_POINT,
-            false,
-            WHITE, ORANGE
+            true, WHITE, ORANGE
         );
     }
 
