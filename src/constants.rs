@@ -41,7 +41,8 @@ pub mod judgement {
     pub const PERFECT: i32 = 22;
     pub const GREAT: i32 = 45;
     pub const GOOD: i32 = 90;
-    pub const MISS: i32 = 135;  // maximum time before an early hit counts as a miss
+    pub const MISS: i32 = 135;      // maximum time before an early hit counts as a miss
+    pub const MAX_HITS: u8 = 3;  // max number of hits detected per frame
     
     pub const DRAW_AHEAD_MS: i32 = (spacing::Y_RANGE_F / spacing::PX_PER_MS) as i32;
 }
@@ -55,6 +56,7 @@ pub mod spacing {
     
     // editable
     pub const NOTE_RADIUS: usize = 10;      // yeah
+    pub const TAIL_RADIUS: usize = 5;
     pub const JUDGEMENT_LINE_HEIGHT: usize = 25;   // height of judgement line above bottom
     pub const PX_PER_MS: f32 = 0.4;         // essentially scroll speed
 
@@ -65,9 +67,7 @@ pub mod spacing {
 
     // lane size
     pub const LANE_WIDTH: usize = BUFFER_WIDTH;
-    pub const LANE_WIDTH_F: f32 = LANE_WIDTH as f32;
     pub const LANE_HEIGHT: usize = BUFFER_HEIGHT;
-    pub const LANE_HEIGHT_F: f32 = LANE_HEIGHT as f32;
 
     // note positioning - y
     // note: (haha) y = 0 is the TOP of the screen!!
@@ -79,10 +79,11 @@ pub mod spacing {
     // note positioning - x
     pub const X_PADDING: usize = NOTE_RADIUS;   // technically editable?
     pub const X0: usize = X_PADDING + NOTE_RADIUS;
-    pub const X_RANGE: usize = BUFFER_WIDTH - 2 * (X_PADDING + NOTE_RADIUS);
+    pub const X_RANGE: usize = LANE_WIDTH - 2 * (X_PADDING + NOTE_RADIUS);
     pub const X_RANGE_F: f32 = X_RANGE as f32;
 
     pub const NOTE_RADIUS_I: isize = NOTE_RADIUS as isize;
+    pub const TAIL_RADIUS_I: isize = TAIL_RADIUS as isize;
 }
 
 // colors

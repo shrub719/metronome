@@ -3,9 +3,7 @@ use crate::{
     game::{
         frame::Frame, 
         input::Input, 
-        map::{
-            NoteClass::*, *
-        }, 
+        map::*, 
         timer::Timer
     }, 
     maps::test::*
@@ -24,15 +22,15 @@ impl Judgement {
 
         match self {
             Perfect => " perfect!    ",
-            Great => " great    ",
-            Good => " good    ",
-            Miss => " miss...    "
+            Great => " great       ",
+            Good => " good        ",
+            Miss => " miss...     "
         }
     }
     
     pub fn from_offset(offset: i32) -> Judgement {
-        use Judgement::*;
-        use judgement::*;
+        use Judgement::*;   // the enum variants
+        use judgement::*;   // the timing constants
 
         match offset.abs() {
             0..PERFECT => Perfect,
@@ -47,6 +45,7 @@ pub struct Game {
     timer: Timer,
     input: Input,
     frame: Frame,
+    hold: Option<Note>,
     map: Map
 }
 impl Game {
@@ -55,6 +54,7 @@ impl Game {
             timer: Timer::new(),
             input: Input::new(),
             frame: Frame::new(),
+            hold: None,
             map: test()
         }
     }
@@ -66,10 +66,26 @@ impl Game {
             i += 1;
 
             let ms_until: i32 = note.ms as i32 - self.timer.ms as i32;    
-            if ms_until > judgement::DRAW_AHEAD_MS { break } // gone too far
+            if ms_until > judgement::DRAW_AHEAD_MS { break } // looking too far
 
             self.frame.draw_note(note.x, ms_until);
+
+            match note.class {
+                NoteClass::Hold { duration } => {
+                    let end = ms_until + duration as i32;
+                    self.frame.draw_hold(note.x, ms_until, end);
+                },
+                _ => ()
+            };
         }
+
+        match self.hold {
+            Some(Note { ms, x, class: NoteClass::Hold { duration } }) => {
+                let end = (ms + duration) as i32 - self.timer.ms as i32;   // uhhh need so much i32?
+                self.frame.draw_hold(x, 0, end)
+            }
+            _ => ()
+        };
     }
 
     fn display_judgement(jdg: Judgement) {
@@ -85,6 +101,7 @@ impl Game {
     }
 
     fn judge(&mut self) {
+        // cull late notes
         loop {
             if self.map.notes.is_empty() { break; } // FIX
 
@@ -98,6 +115,21 @@ impl Game {
             }
         }
 
+        // check hold notes
+        match self.hold {
+            Some(Note { ms, x: _, class: NoteClass::Hold { duration } }) => {  // i cannot BELIEVE this works
+                if self.timer.ms > ms + duration {
+                    self.hold = None;
+                    Game::display_judgement(Judgement::Perfect);
+                } else if !self.input.holding {
+                    self.hold = None;
+                    Game::display_judgement(Judgement::Miss);
+                }
+            },
+            _ => ()
+        };
+
+        // hit nearest notes
         for _ in 0..self.input.n_hits {
             if self.map.notes.is_empty() { break; } // FIX
 
@@ -108,6 +140,13 @@ impl Game {
                 self.map.notes.pop_front();
 
                 let jdg = Judgement::from_offset(offset);
+                
+                if !matches!(jdg, Judgement::Miss) {
+                    if matches!(note.class, NoteClass::Hold { duration: _ }) {
+                        self.hold = Some(note);
+                    }
+                }
+
                 Game::display_judgement(jdg);
             }
         }

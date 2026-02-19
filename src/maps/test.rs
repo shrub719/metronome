@@ -32,14 +32,7 @@ pub fn polyrhythms() -> Map {
 pub fn test() -> Map {
     Map {
         notes: [
-            note!(tap, 1000, 0.5),
-            note!(tap, 1250, 0.5),
-            note!(tap, 1500, 0.0),
-            note!(tap, 1750, 1.0),
-            note!(tap, 2000, 0.25),
-            note!(tap, 2000, 0.75),
-            note!(tap, 2500, 0.15),
-            note!(tap, 2500, 0.85)
+            note!(hold, 1000, 0.5, 1000)
         ].into(),
         events: vec!().into()
     }

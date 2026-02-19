@@ -181,6 +181,10 @@ impl KeyboardState {
         (self.0 >> (key as u8)) & 1 != 0
     }
 
+    pub fn any_key_down(&self) -> bool {
+        self.0 != 0
+    }
+
     /// Return true if the given key was just pressed. If the key is still pressed in `self` and `old`, this function returns false.
     pub fn get_just_pressed(&self, old: KeyboardState) -> Self {
         KeyboardState(self.0 & (!old.0))
