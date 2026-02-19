@@ -31,7 +31,46 @@ pub struct Event {
 
 pub struct Map {
     pub notes: VecDeque<Note>,
-    pub events: VecDeque<Event>
+    // pub events: VecDeque<Event>
+}
+
+pub fn load_map() -> Map {
+    let bytes = include_bytes!("../../target/maps/test.bin");
+
+    let mut notes = VecDeque::with_capacity(bytes.len() / 13);   // TODO: extract note length
+
+    let mut i = 0;
+    while i + 13 <= bytes.len() {
+        let class_id: char = bytes[i] as char;
+
+        let ms = u32::from_le_bytes([
+            bytes[i+1], bytes[i+2], bytes[i+3], bytes[i+4]
+        ]);
+
+        let x = f32::from_le_bytes([
+            bytes[i+5], bytes[i+6], bytes[i+7], bytes[i+8]
+        ]);
+
+        let note = Note {
+            ms, x,
+            class: match class_id {
+                't' => NoteClass::Tap,
+                'h' => NoteClass::Hold { 
+                    ms_end: u32::from_le_bytes([
+                        bytes[i+9], bytes[i+10], bytes[i+11], bytes[i+12]
+                    ])
+                },
+                _ => NoteClass::Tap
+            }
+        };
+
+        notes.push_back(note);
+
+        i += 13;
+    }
+
+
+    Map { notes }
 }
 
 #[macro_export]

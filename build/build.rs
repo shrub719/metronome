@@ -26,14 +26,16 @@ fn convert_map(input: &str, output: &str) {
         
         match class {
             "t" => {
-                bin.write_all(&[b't']).unwrap();
+                bin.write_all(b"t").unwrap();
                 bin.write_all(&ms.to_le_bytes()).unwrap();
                 bin.write_all(&x.to_le_bytes()).unwrap();
+                bin.write_all(b"dead").unwrap();
+
             },
             "h" => {
                 let ms_end: u32 = parts.next().unwrap().parse().unwrap();
 
-                bin.write_all(&[b'h']).unwrap();
+                bin.write_all(b"h").unwrap();
                 bin.write_all(&ms.to_le_bytes()).unwrap();
                 bin.write_all(&x.to_le_bytes()).unwrap();
                 bin.write_all(&ms_end.to_le_bytes()).unwrap();

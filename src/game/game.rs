@@ -5,8 +5,7 @@ use crate::{
         input::Input, 
         map::*, 
         timer::Timer
-    }, 
-    maps::test::*
+    }
 };
 
 #[derive(Clone, Copy)]
@@ -69,7 +68,7 @@ impl Game {
             frame: Frame::new(),
             hold: None,
             score: 0,
-            map: test()
+            map: load_map()
         }
     }
 
@@ -94,7 +93,7 @@ impl Game {
         }
 
         match self.hold {
-            Some(Note { ms, x, class: NoteClass::Hold { ms_end } }) => {
+            Some(Note { ms: _, x, class: NoteClass::Hold { ms_end } }) => {
                 let ms_until_end =  ms_end as i32 - self.timer.ms as i32;   // uhhh need so much i32?
                 self.frame.draw_hold(x, 0, ms_until_end)
             }
@@ -141,7 +140,7 @@ impl Game {
 
         // check hold notes
         match self.hold {
-            Some(Note { ms, x: _, class: NoteClass::Hold { ms_end } }) => {  // i cannot BELIEVE this works
+            Some(Note { ms: _, x: _, class: NoteClass::Hold { ms_end } }) => {  // i cannot BELIEVE this works
                 if self.timer.ms > ms_end {
                     self.hold = None;
                     self.register_judgement(Judgement::Perfect);
