@@ -35,7 +35,7 @@ pub struct Map {
 }
 
 pub fn load_map() -> Map {
-    let bytes = include_bytes!("../../target/maps/test.bin");
+    let bytes = include_bytes!("../../target/maps/new_magic_wand.bin");
 
     let mut notes = VecDeque::with_capacity(bytes.len() / 13);   // TODO: extract note length
 
