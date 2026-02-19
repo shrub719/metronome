@@ -54,23 +54,51 @@ impl Frame {
         self.buffer[i] = ORANGE;
     }
 
-    fn draw_circle(&mut self, x: usize, y: usize) {
-        for i in -NOTE_RADIUS_I..NOTE_RADIUS_I {
+    fn draw_circle(&mut self, x: usize, y: usize, r: isize) {
+        for i in -r..r {
             let u = (x as isize + i) as usize;
-            for j in -NOTE_RADIUS_I..NOTE_RADIUS_I {
+            for j in -r..r {
                 let v = (y as isize + j) as usize;
-                if i * i + j * j < NOTE_RADIUS_I * NOTE_RADIUS_I { self.place_pixel(u, v) };
+                if i * i + j * j < r * r { self.place_pixel(u, v) };
             }
         }
     }
 
+    fn draw_line(&mut self, x: usize, y0: usize, y1: usize) {
+        for y in y1..y0 {
+            for i in -TAIL_RADIUS_I..TAIL_RADIUS_I { 
+                let u = (x as isize + i) as usize;
+                self.place_pixel(u, y);
+            }
+        }
+
+        // HACK
+        self.draw_circle(x, y1, TAIL_RADIUS_I);
+    }
+
+    fn x_from_normalised(normalised_x: f32) -> usize {
+        X0 + (X_RANGE_F * normalised_x) as usize
+    }
+
+    fn y_from_ms(ms: i32) -> usize {
+        let dy = PX_PER_MS * ms as f32;
+        (Y0 as isize - dy as isize) as usize
+    }
+
     pub fn draw_note(&mut self, normalised_x: f32, ms_until: i32) {
-        let x = X0 + (X_RANGE_F * normalised_x) as usize;
+        let x = Frame::x_from_normalised(normalised_x);
+        let y = Frame::y_from_ms(ms_until);
 
-        let dy = PX_PER_MS * ms_until as f32;
-        let y = (Y0 as isize - dy as isize) as usize;
+        self.draw_circle(x, y, NOTE_RADIUS_I);
+    }
 
-        self.draw_circle(x, y);
+    pub fn draw_hold(&mut self, normalised_x: f32, start: i32, end: i32) {
+        let x = Frame::x_from_normalised(normalised_x);
+        let y0 = Frame::y_from_ms(start);
+        let mut y1 = Frame::y_from_ms(end);
+        if y1 > BUFFER_HEIGHT { y1 = 0; }   // trick; technically it overflows if its off-screen
+
+        self.draw_line(x, y0, y1);
     }
 }
 
