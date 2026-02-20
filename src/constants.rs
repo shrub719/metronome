@@ -56,7 +56,6 @@ pub mod display {
     pub const TEXT_HEIGHT: u16 = 20;
     pub const TEXT_WIDTH: u16 = 10;
     pub const TEXT_PADDING: u16 = 5;
-    pub const SMALL_TEXT_HEIGHT: u16 = 10;
 
     // judgement
     pub const UI_JUDGEMENT_Y: u16 = SCREEN_HEIGHT - TEXT_HEIGHT;
@@ -90,16 +89,9 @@ pub mod display {
 
     pub const MENU_NAME_RECT_Y: u16 = MENU_NAME_Y;
     pub const MENU_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
-    pub const MENU_SCORE_RECT_HEIGHT: u16 = SMALL_TEXT_HEIGHT + TEXT_PADDING;
 
     pub const MENU_NAME_POINT: ScreenPoint = ScreenPoint {
         x: TEXT_PADDING, y: MENU_NAME_Y + TEXT_PADDING
-    };
-
-    pub const MENU_NAME_MAX_RECT: ScreenRect = ScreenRect {
-        x: 0, y: MENU_NAME_RECT_Y,
-        width: SCREEN_WIDTH, 
-        height: MENU_NAME_RECT_HEIGHT + MENU_SCORE_RECT_HEIGHT
     };
 
     pub const MENU_SCORE_POINT: ScreenPoint = ScreenPoint {
