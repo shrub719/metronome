@@ -1,0 +1,6 @@
+target
+.DS_Store
+.venv
+just.sh
+test
+sim

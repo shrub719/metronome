@@ -1,0 +1,38 @@
+cargo-features = ["profile-rustflags"]
+[package]
+name = "metronome"
+version = "0.0.0"
+authors = ["shrub719"]
+edition = "2024"
+
+[[bin]]
+name = "metronome"
+path = "src/main.rs"
+
+[lib]
+name = "metronome"
+path = "src/main.rs"
+crate-type = ["cdylib"]
+
+[profile.dev]
+panic="abort"
+strip=true
+opt-level= "z"
+lto = true
+codegen-units = 1
+
+[profile.release]
+panic="abort"
+strip = true
+opt-level = 3
+lto = true
+codegen-units = 1
+
+[dependencies]
+cortex-m = {version="0.7.7", features=["critical-section-single-core"]}
+embedded-alloc = "0.6.0"
+enum-iterator = "2.3.0"
+heapless = "0.9.1"
+
+[build-dependencies]
+cc = "1.2.27"

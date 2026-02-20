@@ -1,0 +1,57 @@
+name: Build
+on: 
+  pull_request:
+    paths-ignore: 
+      - '**.md'
+      - 'LICENSE'
+    branches:
+      - main
+  push:
+    paths-ignore: 
+      - '**.md'
+      - 'LICENSE'
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install C compiler
+        uses: carlosperate/arm-none-eabi-gcc-action@v1
+
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install Nwlink
+        run: |
+          npm install -g nwlink
+          echo "$HOME/.npm-global/bin" >> $GITHUB_PATH
+
+      - name: Install Rust toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly    
+          target: thumbv7em-none-eabihf
+
+      - name: Install just
+        uses: extractions/setup-just@v3
+
+      - name: Prepare for building
+        run: mkdir -p target/output
+        
+      - name: Build nwa
+        run: |
+          just build
+          mv target/thumbv7em-none-eabihf/release/metronome target/output/metronome.nwa
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: metronome_build
+          path: target/output/*
