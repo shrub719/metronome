@@ -84,6 +84,11 @@ pub mod display {
         x: UI_SCORE_X + TEXT_PADDING, y: 0
     };
 
+    #[allow(unused)]
+    pub const UI_MS_POINT: ScreenPoint = ScreenPoint {
+        x: 0, y: 0
+    };
+
     // menu
     pub const MENU_NAME_Y: u16 = SCREEN_HEIGHT / 2 - TEXT_HEIGHT;
     pub const MENU_ARTIST_Y: u16 = MENU_NAME_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;

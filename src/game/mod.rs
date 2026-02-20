@@ -135,7 +135,6 @@ impl Game {
         // cull late notes
         loop {
             if self.map.notes.is_empty() { 
-                self.finished = true;
                 break; 
             } // FIX
 
@@ -166,7 +165,6 @@ impl Game {
         // hit nearest notes
         for _ in 0..self.input.n_hits {
             if self.map.notes.is_empty() { 
-                self.finished = true;
                 break; 
             } // FIX
 
@@ -187,11 +185,16 @@ impl Game {
                 self.register_judgement(jdg);
             }
         }
+
+        self.finished = self.map.notes.is_empty() && self.hold.is_none();
     }
 
     fn update(&mut self) {
         self.timer.update();
         self.input.update();
+
+        #[cfg(debug_assertions)]
+        Frame::draw_ms(self.timer.ms);
 
         self.judge(); 
 

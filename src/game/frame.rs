@@ -9,6 +9,7 @@ use crate::{
 };
 calc_use!(alloc::boxed::Box);
 calc_use!(alloc::string::ToString);
+calc_use!(alloc::format);
 
 pub struct Frame {
     buffer: Box<[Color565; BUFFER_SIZE]>
@@ -54,6 +55,15 @@ impl Frame {
 
     pub fn push(&self) {
         push_rect(GAME_RECT, &*self.buffer);
+    }
+
+    #[allow(unused)]
+    pub fn draw_ms(ms: u32) {
+        draw_string(
+            &format!("{}", ms), 
+            UI_MS_POINT,
+            false, WHITE, GREY
+        );
     }
 
     pub fn draw_judgement(jdg: Judgement, score: u32) {
