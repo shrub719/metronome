@@ -41,6 +41,6 @@ impl Input {
         }
 
         self.holding = self.state.any_key_down();
-        self.quit = self.state.key_down(QUIT) || self.state.key_down(HOME);
+        self.quit = self.state.key_down(QUIT);
     }
 } 

@@ -44,7 +44,7 @@ impl Menu {
     fn dramatic_pause() {
         push_rect_uniform(
             SCREEN_RECT,
-            COLOR_BLACK
+            BLACK
         );
         utils::refresh_simulator();
         time::wait_milliseconds(500);
@@ -71,15 +71,49 @@ impl Menu {
         let name = map_data.name;
         let id = map_data.id;
         let length = name.len() as u16;
-        let mut score = load_high_score(id);
-        let mut high_score = false;
+        let score = results.score;
+        let high_score = load_high_score(id);
 
-        if results.score > score {
-            high_score = true;
-            score = results.score;
+        let mut score_text = format!("score: {}", score);
+        if score > high_score {
+            score_text = format!("score: {} (high score!)", score);
             save_high_score(id, score);
         }
 
+        let judge = format!(
+            "   perfect: {}\n   great: {}\n   good: {}\n   miss: {}",
+            results.perfect, results.great, results.good, results.miss
+        );
+
+        wait_for_vblank();
+
+        push_rect_uniform(
+            ScreenRect::new(
+                0, RESULT_NAME_RECT_Y,
+                3*TEXT_PADDING + length*TEXT_WIDTH,
+                RESULT_NAME_RECT_HEIGHT
+            ),
+            ORANGE
+        );
+
+        draw_string(
+            name,
+            RESULT_NAME_POINT,
+            true, WHITE, ORANGE
+        );
+
+        draw_string(
+            &score_text,
+            RESULT_SCORE_POINT,
+            false, ORANGE, BLACK
+        );
+
+        draw_string(
+            &judge,
+            RESULT_JUDGE_POINT,
+            false, ORANGE, BLACK
+        );
+        
         self.input.scan();
         while !self.input.is_keydown(CONFIRM) { self.input.scan(); }
 
@@ -96,7 +130,7 @@ impl Menu {
 
         wait_for_vblank();
 
-        push_rect_uniform(MENU_NAME_MAX_RECT, COLOR_BLACK);
+        push_rect_uniform(MENU_NAME_MAX_RECT, BLACK);
 
         push_rect_uniform(
             ScreenRect::new(
@@ -116,7 +150,7 @@ impl Menu {
         draw_string(
             &format!("high score: {}", score),
             MENU_SCORE_POINT,
-            false, ORANGE, COLOR_BLACK
+            false, ORANGE, BLACK
         );
     }
 
