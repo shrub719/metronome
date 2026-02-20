@@ -67,3 +67,7 @@ pub fn save_high_score(id: &str, score: u32) {
         }
     }
 }
+
+pub fn clear_high_scores() {
+    let _ = file_erase(HIGH_SCORE_FILE);
+}

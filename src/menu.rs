@@ -116,7 +116,7 @@ impl Menu {
         );
         
         self.input.scan();
-        while !(self.input.is_keydown(CONFIRM) || self.input.is_keydown(BACK)) { self.input.scan(); }
+        while !(self.input.is_keydown(CONFIRM) || self.input.is_keydown(QUIT)) { self.input.scan(); }
 
         Self::dramatic_pause();
 
@@ -155,6 +155,42 @@ impl Menu {
         );
     }
 
+    fn check_clear_scores(&mut self) {
+        Menu::dramatic_pause();
+
+        let text = "delete all high scores?";
+        let length = text.len() as u16;
+
+        wait_for_vblank();
+
+        push_rect_uniform(
+            ScreenRect::new(
+                0, MENU_NAME_RECT_Y,
+                3*TEXT_PADDING + length*TEXT_WIDTH,
+                RESULT_NAME_RECT_HEIGHT
+            ),
+            RED
+        );
+
+        draw_string(
+            text,
+            MENU_NAME_POINT,
+            true, WHITE, RED
+        );
+
+        self.input.scan();
+        while !(self.input.is_keydown(CONFIRM) || self.input.is_keydown(QUIT)) { self.input.scan(); }
+
+        if self.input.is_keydown(CONFIRM) {
+            clear_high_scores();
+        }
+
+        Self::dramatic_pause();
+
+        self.input.scan();
+        self.draw_menu();
+    }
+
     pub fn main_loop(&mut self) {
         Self::dramatic_pause();
         self.input.scan();
@@ -167,6 +203,7 @@ impl Menu {
                 Some(PREV) => self.prev_index(),
                 Some(NEXT) => self.next_index(),
                 Some(CONFIRM) => self.start_game(),
+                Some(CLEAR) => self.check_clear_scores(),
                 _ => ()
             };
         }

@@ -17,6 +17,7 @@ pub mod controls {
     pub const NEXT: Key = Key::Down;
     pub const CONFIRM: Key = Key::Ok;
     pub const HOME: Key = Key::Home;  
+    pub const CLEAR: Key = Key::Backspace;
 }
 
 // note: editable constants at the top; calculated values after
@@ -193,5 +194,7 @@ pub mod palette {
 
     pub const WHITE: Color565 = Color565::from_rgb(255, 255, 255);
     pub const GREY: Color565 = Color565::from_rgb(17, 17, 17);
+
+    pub const RED: Color565 = Color565::from_rgb(255, 52, 52);
 }
 
