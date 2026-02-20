@@ -42,6 +42,7 @@ impl Menu {
     }
 
     fn dramatic_pause() {
+        wait_for_vblank();
         push_rect_uniform(
             SCREEN_RECT,
             BLACK
@@ -115,7 +116,7 @@ impl Menu {
         );
         
         self.input.scan();
-        while !self.input.is_keydown(CONFIRM) { self.input.scan(); }
+        while !(self.input.is_keydown(CONFIRM) || self.input.is_keydown(BACK)) { self.input.scan(); }
 
         Self::dramatic_pause();
 
