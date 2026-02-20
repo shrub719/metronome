@@ -101,31 +101,31 @@ impl Menu {
                 3*TEXT_PADDING + length*TEXT_WIDTH,
                 RESULT_NAME_RECT_HEIGHT
             ),
-            ORANGE
+            ACCENT
         );
 
         draw_string(
             title,
             RESULT_NAME_POINT,
-            true, WHITE, ORANGE
+            true, WHITE, ACCENT
         );
 
         draw_string(
             artist,
             RESULT_ARTIST_POINT,
-            false, ORANGE, GREY
+            false, ACCENT, GREY
         );
 
         draw_string(
             &score_text,
             RESULT_SCORE_POINT,
-            false, ORANGE, GREY
+            false, ACCENT, GREY
         );
 
         draw_string(
             &judge,
             RESULT_JUDGE_POINT,
-            false, ORANGE, GREY
+            false, ACCENT, GREY
         );
         
         self.input.scan();
@@ -149,25 +149,25 @@ impl Menu {
                 3*TEXT_PADDING + length*TEXT_WIDTH, 
                 MENU_NAME_RECT_HEIGHT
             ),
-            ORANGE
+            ACCENT
         );
 
         draw_string(
             title, 
             MENU_NAME_POINT,
-            true, WHITE, ORANGE
+            true, WHITE, ACCENT
         );
 
         draw_string(
             artist,
             MENU_ARTIST_POINT,
-            false, ORANGE, GREY
+            false, ACCENT, GREY
         );
 
         draw_string(
             &format!("high score: {}", score),
             MENU_SCORE_POINT,
-            false, ORANGE, GREY
+            false, ACCENT, GREY
         );
     }
 

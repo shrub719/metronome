@@ -26,14 +26,14 @@ impl Frame {
         wait_for_vblank();
 
         push_rect_uniform(SCREEN_RECT, BLACK);
-        push_rect_uniform(BACKDROP_RECT, ORANGE);
+        push_rect_uniform(BACKDROP_RECT, ACCENT);
         push_rect_uniform(GAME_RECT, GREY);
 
-        push_rect_uniform(UI_JUDGEMENT_RECT, ORANGE);
-        push_rect_uniform(UI_SCORE_RECT, ORANGE);
+        push_rect_uniform(UI_JUDGEMENT_RECT, ACCENT);
+        push_rect_uniform(UI_SCORE_RECT, ACCENT);
 
-        draw_string("ready?", UI_JUDGEMENT_POINT, true, WHITE, ORANGE);
-        draw_string("0", UI_SCORE_POINT, true, WHITE, ORANGE);
+        draw_string("ready?", UI_JUDGEMENT_POINT, true, WHITE, ACCENT);
+        draw_string("0", UI_SCORE_POINT, true, WHITE, ACCENT);
     }
     
     fn clear(&mut self) {
@@ -70,12 +70,12 @@ impl Frame {
         draw_string(
             &jdg.to_str(),
             UI_JUDGEMENT_POINT,
-            true, WHITE, ORANGE
+            true, WHITE, ACCENT
         );
         draw_string(
             &score.to_string(),
             UI_SCORE_POINT,
-            true, WHITE, ORANGE
+            true, WHITE, ACCENT
         );
     }
 
@@ -85,7 +85,7 @@ impl Frame {
 
         let i = BUFFER_WIDTH*y + x;
         if i > BUFFER_SIZE { return };
-        self.buffer[i] = ORANGE;
+        self.buffer[i] = ACCENT;
     }
 
     fn draw_note(&mut self, x: usize, y: usize, r: isize) {
