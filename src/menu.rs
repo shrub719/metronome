@@ -46,6 +46,7 @@ impl Menu {
             SCREEN_RECT,
             COLOR_BLACK
         );
+        utils::refresh_simulator();
         time::wait_milliseconds(500);
     }
 
@@ -56,6 +57,8 @@ impl Menu {
         while !self.input.is_keydown(CONFIRM) { self.input.scan(); }
 
         Self::dramatic_pause();
+
+        self.input.scan();
     }
 
     fn start_game(&mut self) {
