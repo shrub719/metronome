@@ -50,17 +50,6 @@ impl Menu {
         time::wait_milliseconds(500);
     }
 
-    fn display_results(&mut self, results: Results) {
-        
-
-        self.input.scan();
-        while !self.input.is_keydown(CONFIRM) { self.input.scan(); }
-
-        Self::dramatic_pause();
-
-        self.input.scan();
-    }
-
     fn start_game(&mut self) {
         Self::dramatic_pause();
 
@@ -77,11 +66,35 @@ impl Menu {
         self.draw_menu();
     }
 
+    fn display_results(&mut self, results: Results) {
+        let map_data = MAP_DATA[self.index];
+        let name = map_data.name;
+        let id = map_data.id;
+        let length = name.len() as u16;
+        let mut score = load_high_score(id);
+        let mut high_score = false;
+
+        if results.score > score {
+            high_score = true;
+            score = results.score;
+            save_high_score(id, score);
+        }
+
+        self.input.scan();
+        while !self.input.is_keydown(CONFIRM) { self.input.scan(); }
+
+        Self::dramatic_pause();
+
+        self.input.scan();
+    }
+
     fn draw_menu(&self) {
         let map_data = MAP_DATA[self.index];
         let name = map_data.name;
         let length = name.len() as u16;
         let score = load_high_score(map_data.id);
+
+        wait_for_vblank();
 
         push_rect_uniform(MENU_NAME_MAX_RECT, COLOR_BLACK);
 
