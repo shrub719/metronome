@@ -3,9 +3,9 @@ use crate::{
     game::{
         frame::Frame, 
         input::Input, 
-        map::*, 
         timer::Timer
-    }
+    },
+    map::*
 };
 
 #[derive(Clone, Copy)]

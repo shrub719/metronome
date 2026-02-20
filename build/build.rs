@@ -10,6 +10,15 @@ fn convert_icon() {
     assert!(output.status.success(), "{}", String::from_utf8_lossy(&output.stderr));
 }
 
+fn adjust_ms(ms: u32) -> u32 {
+    // the calculator's clock is slightly behind,
+    // making notes near the end of the song much
+    // later than they should be
+    
+    let calc_ms_per_real_ms: f64 = 0.998;  // hours upon gruelling hours
+    (ms as f64 * calc_ms_per_real_ms) as u32
+}
+
 fn convert_map(input: &str, output: &str) {
     let txt = fs::read_to_string(input).unwrap();
     let mut bin = fs::File::create(output).unwrap();
@@ -21,7 +30,7 @@ fn convert_map(input: &str, output: &str) {
 
         let mut parts = line.split_whitespace();
         let class = parts.next().unwrap();
-        let ms: u32 = parts.next().unwrap().parse().unwrap();
+        let ms: u32 = adjust_ms(parts.next().unwrap().parse().unwrap());
         let x: f32 = parts.next().unwrap().parse().unwrap();
         
         match class {
@@ -33,7 +42,7 @@ fn convert_map(input: &str, output: &str) {
 
             },
             "h" => {
-                let ms_end: u32 = parts.next().unwrap().parse().unwrap();
+                let ms_end: u32 = adjust_ms(parts.next().unwrap().parse().unwrap());
 
                 bin.write_all(b"h").unwrap();
                 bin.write_all(&ms.to_le_bytes()).unwrap();
