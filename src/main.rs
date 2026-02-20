@@ -5,6 +5,7 @@
 mod eadk;
 
 mod constants;
+mod map;
 mod game;
 
 configure_app!(b"metronome\0", 10, "../target/icon.nwi", 1654);
