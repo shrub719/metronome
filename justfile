@@ -34,6 +34,12 @@ nwb-dev-run: nwb-dev
     ./simulator/epsilon.bin --nwb ./target/{{current_target}}/debug/libmetronome.so
 
 
+# ===== MAPS =====
+
+convert-osu name:
+    python3 ./build/converter.py ./osu/{{name}}.osu ./assets/maps/{{name}}.mtn
+
+
 # ===== UTILS =====
 
 ndev: nwb-dev-run

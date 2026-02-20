@@ -1,6 +1,5 @@
 import sys
 
-
 def read_osu(file):
     name = file.split("/")[-1]
     notes = f"# generated from {name}\n\n"

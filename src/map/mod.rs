@@ -2,6 +2,9 @@ use crate::eadk::display::Color565;
 calc_use!(alloc::collections::vec_deque::VecDeque);
 sim_use!(std::collections::VecDeque);
 
+pub mod maps;
+pub mod storage;
+
 #[derive(Clone, Copy)]
 pub enum NoteClass {
     Tap,
@@ -34,9 +37,12 @@ pub struct Map {
     // pub events: VecDeque<Event>
 }
 
-pub fn load_map() -> Map {
-    let bytes = include_bytes!("../target/maps/new_magic_wand.bin");
+pub struct MapData {
+    pub name: &'static str,
+    pub id: &'static str
+}
 
+pub fn load_map(bytes: &[u8]) -> Map {
     let mut notes = VecDeque::with_capacity(bytes.len() / 13);   // TODO: extract note length
 
     let mut i = 0;

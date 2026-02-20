@@ -63,11 +63,11 @@ fn convert_maps() {
     for entry in fs::read_dir(in_dir).unwrap() {
         let path = entry.unwrap().path();
 
-        if path.extension().and_then(|s| s.to_str()) == Some("txt") {
+        if path.extension().and_then(|s| s.to_str()) == Some("mtn") {
             println!("cargo:rerun-if-changed={}", path.display());
 
             let filename = path.file_stem().unwrap().to_str().unwrap();
-            let output = Path::new(&out_dir).join(format!("{filename}.bin"));
+            let output = Path::new(&out_dir).join(format!("{filename}.mtb"));
 
             convert_map(path.to_str().unwrap(), output.to_str().unwrap());
         }
