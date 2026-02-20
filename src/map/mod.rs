@@ -39,7 +39,8 @@ pub struct Map {
 
 #[derive(Clone, Copy)]
 pub struct MapData {
-    pub name: &'static str,
+    pub title: &'static str,
+    pub artist: &'static str,
     pub id: &'static str
 }
 

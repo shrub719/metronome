@@ -73,9 +73,10 @@ impl Menu {
 
     fn display_results(&mut self, results: Results) {
         let map_data = MAP_DATA[self.index];
-        let name = map_data.name;
+        let title = map_data.title;
+        let artist = map_data.artist;
         let id = map_data.id;
-        let length = name.len() as u16;
+        let length = title.len() as u16;
         let score = results.score;
         let high_score = load_high_score(id);
 
@@ -104,9 +105,15 @@ impl Menu {
         );
 
         draw_string(
-            name,
+            title,
             RESULT_NAME_POINT,
             true, WHITE, ORANGE
+        );
+
+        draw_string(
+            artist,
+            RESULT_ARTIST_POINT,
+            false, ORANGE, GREY
         );
 
         draw_string(
@@ -127,8 +134,9 @@ impl Menu {
 
     fn draw_menu(&self) {
         let map_data = MAP_DATA[self.index];
-        let name = map_data.name;
-        let length = name.len() as u16;
+        let title = map_data.title;
+        let artist = map_data.artist;
+        let length = title.len() as u16;
         let score = load_high_score(map_data.id);
 
         wait_for_vblank();
@@ -145,9 +153,15 @@ impl Menu {
         );
 
         draw_string(
-            name, 
+            title, 
             MENU_NAME_POINT,
             true, WHITE, ORANGE
+        );
+
+        draw_string(
+            artist,
+            MENU_ARTIST_POINT,
+            false, ORANGE, GREY
         );
 
         draw_string(
