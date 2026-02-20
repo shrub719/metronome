@@ -54,6 +54,7 @@ pub mod display {
 
     // text
     pub const TEXT_HEIGHT: u16 = 20;
+    pub const SMALL_TEXT_HEIGHT: u16 = 14;
     pub const TEXT_WIDTH: u16 = 10;
     pub const TEXT_PADDING: u16 = 5;
 
@@ -85,7 +86,8 @@ pub mod display {
 
     // menu
     pub const MENU_NAME_Y: u16 = SCREEN_HEIGHT / 2 - TEXT_HEIGHT;
-    pub const MENU_SCORE_Y: u16 = MENU_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 2;
+    pub const MENU_ARTIST_Y: u16 = MENU_NAME_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
+    pub const MENU_SCORE_Y: u16 = MENU_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
 
     pub const MENU_NAME_RECT_Y: u16 = MENU_NAME_Y;
     pub const MENU_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
@@ -94,13 +96,18 @@ pub mod display {
         x: TEXT_PADDING, y: MENU_NAME_Y + TEXT_PADDING
     };
 
+    pub const MENU_ARTIST_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: MENU_ARTIST_Y
+    };
+
     pub const MENU_SCORE_POINT: ScreenPoint = ScreenPoint {
-        x: TEXT_PADDING, y: MENU_SCORE_Y + TEXT_PADDING
+        x: TEXT_PADDING, y: MENU_SCORE_Y
     };
 
     // results
     pub const RESULT_NAME_Y: u16 = SCREEN_HEIGHT / 4 - TEXT_HEIGHT;
-    pub const RESULT_SCORE_Y: u16 = RESULT_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 2;
+    pub const RESULT_ARTIST_Y: u16 = RESULT_NAME_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
+    pub const RESULT_SCORE_Y: u16 = RESULT_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
     pub const RESULT_JUDGE_Y: u16 = SCREEN_HEIGHT / 3 * 2;
 
     pub const RESULT_NAME_RECT_Y: u16 = RESULT_NAME_Y;
@@ -110,8 +117,12 @@ pub mod display {
         x: TEXT_PADDING, y: RESULT_NAME_Y + TEXT_PADDING
     };
 
+    pub const RESULT_ARTIST_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: RESULT_ARTIST_Y
+    };
+
     pub const RESULT_SCORE_POINT: ScreenPoint = ScreenPoint {
-        x: TEXT_PADDING, y: RESULT_SCORE_Y + TEXT_PADDING
+        x: TEXT_PADDING, y: RESULT_SCORE_Y
     };
 
     pub const RESULT_JUDGE_POINT: ScreenPoint = ScreenPoint {
