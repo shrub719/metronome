@@ -3,7 +3,9 @@ use crate::eadk::keyboard::*;
 
 pub mod file {
     // editable?
-    pub const HIGH_SCORE_FILE: &str = "metronome_high_scores.py";
+    pub const HIGH_SCORE_FILE: &str = "metronome_high_scores.mth";
+    // .py makes it visible, but i don't want tampering (mostly
+    // cause it causes errors)
 }
 
 pub mod controls {
@@ -54,7 +56,6 @@ pub mod display {
     pub const TEXT_WIDTH: u16 = 10;
     pub const TEXT_PADDING: u16 = 5;
     pub const SMALL_TEXT_HEIGHT: u16 = 10;
-    pub const SMALL_TEXT_WIDTH: u16 = 7;
 
     // judgement
     pub const UI_JUDGEMENT_Y: u16 = SCREEN_HEIGHT - TEXT_HEIGHT;
@@ -83,7 +84,7 @@ pub mod display {
     };
 
     // menu
-    pub const MENU_NAME_Y: u16 = 100;
+    pub const MENU_NAME_Y: u16 = SCREEN_HEIGHT / 2 - TEXT_HEIGHT;
     pub const MENU_SCORE_Y: u16 = MENU_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 2;
 
     pub const MENU_NAME_RECT_Y: u16 = MENU_NAME_Y;
@@ -102,6 +103,26 @@ pub mod display {
 
     pub const MENU_SCORE_POINT: ScreenPoint = ScreenPoint {
         x: TEXT_PADDING, y: MENU_SCORE_Y + TEXT_PADDING
+    };
+
+    // results
+    pub const RESULT_NAME_Y: u16 = SCREEN_HEIGHT / 4 - TEXT_HEIGHT;
+    pub const RESULT_SCORE_Y: u16 = RESULT_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 2;
+    pub const RESULT_JUDGE_Y: u16 = SCREEN_HEIGHT / 3 * 2;
+
+    pub const RESULT_NAME_RECT_Y: u16 = RESULT_NAME_Y;
+    pub const RESULT_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
+
+    pub const RESULT_NAME_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: RESULT_NAME_Y + TEXT_PADDING
+    };
+
+    pub const RESULT_SCORE_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: RESULT_SCORE_Y + TEXT_PADDING
+    };
+
+    pub const RESULT_JUDGE_POINT: ScreenPoint = ScreenPoint {
+        x: 0, y: RESULT_JUDGE_Y
     };
 }
 
@@ -168,8 +189,9 @@ pub mod palette {
 
     pub const ORANGE: Color565 = Color565::from_rgb(255, 183, 52);
     //      is the new
-    pub const BLACK: Color565 = Color565::from_rgb(17, 17, 17);
+    pub const BLACK: Color565 = Color565::from_rgb(0, 0, 0);
 
     pub const WHITE: Color565 = Color565::from_rgb(255, 255, 255);
+    pub const GREY: Color565 = Color565::from_rgb(17, 17, 17);
 }
 

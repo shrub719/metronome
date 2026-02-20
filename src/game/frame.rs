@@ -24,9 +24,9 @@ impl Frame {
     fn setup() {
         wait_for_vblank();
 
-        push_rect_uniform(SCREEN_RECT, COLOR_BLACK);
+        push_rect_uniform(SCREEN_RECT, BLACK);
         push_rect_uniform(BACKDROP_RECT, ORANGE);
-        push_rect_uniform(GAME_RECT, BLACK);
+        push_rect_uniform(GAME_RECT, GREY);
 
         push_rect_uniform(UI_JUDGEMENT_RECT, ORANGE);
         push_rect_uniform(UI_SCORE_RECT, ORANGE);
@@ -37,7 +37,7 @@ impl Frame {
     
     fn clear(&mut self) {
         for x in &mut *self.buffer {
-            *x = BLACK;
+            *x = GREY;
         }
     }
 
