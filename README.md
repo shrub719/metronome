@@ -4,7 +4,9 @@
     metronome
 </h1>
 
-A WIP silent rhythm game for the NumWorks calculator.
+**press any key.**
+
+A silent rhythm game for the NumWorks calculator.
 
 ## Installation
 
@@ -15,8 +17,13 @@ A WIP silent rhythm game for the NumWorks calculator.
 1. Upload `metronome.nwa`
 1. Press **Install**
 
-<!-- TODO: simualtor -->
+<!-- TODO: simulator -->
 
-## Usage
+## Controls
 
-<!-- TODO -->
+- Use **D-pad Up/Down** to select a song
+- Navigate with **Ok**/**Back**
+- Exit with **Home**
+- **Backspace** to clear all scores (**Ok** confirm/**Back** cancel)
+
+In game, **press any key.**
