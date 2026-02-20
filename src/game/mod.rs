@@ -156,7 +156,11 @@ impl Game {
                     self.register_judgement(Judgement::Perfect);
                 } else if !self.input.holding {
                     self.hold = None;
-                    self.register_judgement(Judgement::Miss);
+                    if ms_end - self.timer.ms < judgement::GOOD as u32 {
+                        self.register_judgement(Judgement::Perfect);
+                    } else { 
+                        self.register_judgement(Judgement::Miss);
+                    }
                 }
             },
             _ => ()
