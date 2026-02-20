@@ -34,6 +34,7 @@ pub fn write_high_score(id: &str, score: u32) {
         Some(binary) => {
             let content = str::from_utf8(&binary).unwrap();
             let mut new_binary = Vec::<u8>::with_capacity(20);
+            new_binary.push(b'\n');
 
             let mut found = false;
             for line in content.split('\n') {
@@ -57,6 +58,7 @@ pub fn write_high_score(id: &str, score: u32) {
                 new_binary.extend_from_slice(new_line.as_bytes());
             }
 
+            let _ = file_erase(HIGH_SCORE_FILE);
             let _ = file_write(HIGH_SCORE_FILE, &new_binary);
         },
         None => {
