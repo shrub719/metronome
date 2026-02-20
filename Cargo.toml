@@ -2,7 +2,7 @@ cargo-features = ["profile-rustflags"]
 
 [package]
 name = "metronome"
-version = "0.0.0"
+version = "0.1.0"
 authors = ["shrub719"]
 edition = "2024"
 build = "build/build.rs"
