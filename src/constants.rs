@@ -1,8 +1,20 @@
 use crate::eadk::display::*;
+use crate::eadk::keyboard::*;
 
 pub mod file {
     // editable?
     pub const HIGH_SCORE_FILE: &str = "metronome_high_scores.py";
+}
+
+pub mod controls {
+    use super::*;
+
+    // editable
+    pub const QUIT: Key = Key::Back;
+    pub const PREV: Key = Key::Up;
+    pub const NEXT: Key = Key::Down;
+    pub const CONFIRM: Key = Key::Ok;
+    pub const HOME: Key = Key::Home;  
 }
 
 // note: editable constants at the top; calculated values after
@@ -37,9 +49,14 @@ pub mod display {
         height: SCREEN_HEIGHT
     };
 
-    // judgement
+    // text
     pub const TEXT_HEIGHT: u16 = 20;
+    pub const TEXT_WIDTH: u16 = 10;
     pub const TEXT_PADDING: u16 = 5;
+    pub const SMALL_TEXT_HEIGHT: u16 = 10;
+    pub const SMALL_TEXT_WIDTH: u16 = 7;
+
+    // judgement
     pub const UI_JUDGEMENT_Y: u16 = SCREEN_HEIGHT - TEXT_HEIGHT;
     pub const UI_JUDGEMENT_WIDTH: u16 = BACKDROP_MARGIN;
     pub const UI_SCORE_X: u16 = GAME_MARGIN + GAME_WIDTH + BORDER_SIZE;
@@ -63,6 +80,28 @@ pub mod display {
     };
     pub const UI_SCORE_POINT: ScreenPoint = ScreenPoint {
         x: UI_SCORE_X + TEXT_PADDING, y: 0
+    };
+
+    // menu
+    pub const MENU_NAME_Y: u16 = 100;
+    pub const MENU_SCORE_Y: u16 = MENU_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 2;
+
+    pub const MENU_NAME_RECT_Y: u16 = MENU_NAME_Y;
+    pub const MENU_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
+    pub const MENU_SCORE_RECT_HEIGHT: u16 = SMALL_TEXT_HEIGHT + TEXT_PADDING;
+
+    pub const MENU_NAME_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: MENU_NAME_Y + TEXT_PADDING
+    };
+
+    pub const MENU_NAME_MAX_RECT: ScreenRect = ScreenRect {
+        x: 0, y: MENU_NAME_RECT_Y,
+        width: SCREEN_WIDTH, 
+        height: MENU_NAME_RECT_HEIGHT + MENU_SCORE_RECT_HEIGHT
+    };
+
+    pub const MENU_SCORE_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: MENU_SCORE_Y + TEXT_PADDING
     };
 }
 
