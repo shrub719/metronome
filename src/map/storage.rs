@@ -29,7 +29,7 @@ pub fn load_high_score(id: &str) -> u32 {
     0
 }
 
-pub fn write_high_score(id: &str, score: u32) {
+pub fn save_high_score(id: &str, score: u32) {
     match file_read(HIGH_SCORE_FILE) {
         Some(binary) => {
             let content = str::from_utf8(&binary).unwrap();
