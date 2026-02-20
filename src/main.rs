@@ -9,7 +9,7 @@ mod map;
 mod menu;
 mod game;
 
-configure_app!(b"metronome\0", 10, "../target/icon.nwi", 1654);
+configure_app!(b"metronome\0", 10, "../target/icon.nwi", 2659);
 
 setup_allocator!();
 
