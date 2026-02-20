@@ -37,6 +37,7 @@ pub struct Map {
     // pub events: VecDeque<Event>
 }
 
+#[derive(Clone, Copy)]
 pub struct MapData {
     pub name: &'static str,
     pub id: &'static str

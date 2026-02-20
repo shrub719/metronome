@@ -59,13 +59,23 @@ impl Judgement {
     }
 }
 
+#[derive(Clone, Copy, Default)]
+pub struct Results {
+    pub score: u32,
+    pub perfect: u32,
+    pub great: u32,
+    pub good: u32,
+    pub miss: u32
+}
+
 pub struct Game {
     timer: Timer,
     input: Input,
     frame: Frame,
     hold: Option<Note>,
-    score: u32,
-    map: Map
+    results: Results,
+    map: Map,
+    finished: bool
 }
 impl Game {
     pub fn new(level_index: usize) -> Self {
@@ -74,8 +84,9 @@ impl Game {
             input: Input::new(),
             frame: Frame::new(),
             hold: None,
-            score: 0,
-            map: load_map(MAPS[level_index])
+            results: Results::default(),
+            map: load_map(MAPS[level_index]),
+            finished: false
         }
     }
 
@@ -109,14 +120,24 @@ impl Game {
     }
 
     fn register_judgement(&mut self, jdg: Judgement) {
-        self.score += jdg.to_score();
-        Frame::draw_judgement(jdg, self.score);
+        match jdg {
+            Judgement::Perfect => self.results.perfect += 1,
+            Judgement::Great => self.results.great +=1,
+            Judgement::Good => self.results.good += 1,
+            Judgement::Miss => self.results.miss += 1
+        };
+
+        self.results.score += jdg.to_score();
+        Frame::draw_judgement(jdg, self.results.score);
     }
 
     fn judge(&mut self) {
         // cull late notes
         loop {
-            if self.map.notes.is_empty() { break; } // FIX
+            if self.map.notes.is_empty() { 
+                self.finished = true;
+                break; 
+            } // FIX
 
             let note = self.map.notes[0];
             let ms_late = self.timer.ms as i32 - note.ms as i32;
@@ -144,7 +165,10 @@ impl Game {
 
         // hit nearest notes
         for _ in 0..self.input.n_hits {
-            if self.map.notes.is_empty() { break; } // FIX
+            if self.map.notes.is_empty() { 
+                self.finished = true;
+                break; 
+            } // FIX
 
             let note = self.map.notes[0];
             let offset = self.timer.ms as i32 - note.ms as i32;
@@ -165,7 +189,7 @@ impl Game {
         }
     }
 
-    pub fn update(&mut self) {
+    fn update(&mut self) {
         self.timer.update();
         self.input.update();
 
@@ -174,5 +198,13 @@ impl Game {
         self.frame.reset();
         self.draw_notes();
         self.frame.push();
+    }
+
+    pub fn main_loop(&mut self) -> Option<Results> {
+        while !self.input.quit && !self.finished {
+            self.update();
+        }
+
+        if self.finished { Some(self.results) } else { None }
     }
 }

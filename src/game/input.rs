@@ -1,13 +1,17 @@
 use crate::{
     eadk::keyboard::*,
-    constants::judgement::*
+    constants::{
+        judgement::*,
+        controls::*
+    }
 };
 
 pub struct Input {
     state: KeyboardState,
     prev_state: KeyboardState,
     pub n_hits: u8,
-    pub holding: bool
+    pub holding: bool,
+    pub quit: bool
 }
 impl Input {
     pub fn new() -> Self {
@@ -15,7 +19,8 @@ impl Input {
             state: KeyboardState::default(),
             prev_state: KeyboardState::default(),
             n_hits: 0,
-            holding: false
+            holding: false,
+            quit: false
         }
     }
 
@@ -36,5 +41,6 @@ impl Input {
         }
 
         self.holding = self.state.any_key_down();
+        self.quit = self.state.key_down(QUIT) || self.state.key_down(HOME);
     }
 } 

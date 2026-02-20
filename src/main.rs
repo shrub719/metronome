@@ -6,6 +6,7 @@ mod eadk;
 
 mod constants;
 mod map;
+mod menu;
 mod game;
 
 configure_app!(b"metronome\0", 10, "../target/icon.nwi", 1654);
@@ -16,11 +17,6 @@ setup_allocator!();
 fn main() {
     init_heap!(); 
 
-    use crate::game::Game;
-    let mut game = Game::new(0);
-    while !crate::eadk::utils::home_pressed() {
-        game.update();
-    }
-
-    map::storage::write_high_score("test", 400);
+    let mut menu = menu::Menu::new();
+    menu.main_loop();
 }
