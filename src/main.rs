@@ -16,10 +16,11 @@ setup_allocator!();
 fn main() {
     init_heap!(); 
 
-    use crate::game::game::Game;
-    let mut game = Game::new();
+    use crate::game::Game;
+    let mut game = Game::new(0);
     while !crate::eadk::utils::home_pressed() {
         game.update();
     }
-}
 
+    map::storage::write_high_score("test", 400);
+}

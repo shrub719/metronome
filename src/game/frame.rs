@@ -5,7 +5,7 @@ use crate::{
         palette::*
     }, 
     eadk::display::*,
-    game::game::Judgement
+    game::Judgement
 };
 calc_use!(alloc::boxed::Box);
 calc_use!(alloc::string::ToString);

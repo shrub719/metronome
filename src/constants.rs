@@ -1,5 +1,10 @@
 use crate::eadk::display::*;
 
+pub mod file {
+    // editable?
+    pub const HIGH_SCORE_FILE: &str = "metronome_high_scores.py";
+}
+
 // note: editable constants at the top; calculated values after
 pub mod display {
     use super::*;
