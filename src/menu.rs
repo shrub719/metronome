@@ -31,6 +31,10 @@ impl Menu {
         }
     }
 
+    fn draw_background() {
+        push_rect_uniform(SCREEN_RECT, GREY);
+    }
+
     fn prev_index(&mut self) {
         if self.index != 0 { self.index -= 1; }
         self.draw_menu();
@@ -88,6 +92,8 @@ impl Menu {
 
         wait_for_vblank();
 
+        Menu::draw_background();
+
         push_rect_uniform(
             ScreenRect::new(
                 0, RESULT_NAME_RECT_Y,
@@ -106,13 +112,13 @@ impl Menu {
         draw_string(
             &score_text,
             RESULT_SCORE_POINT,
-            false, ORANGE, BLACK
+            false, ORANGE, GREY
         );
 
         draw_string(
             &judge,
             RESULT_JUDGE_POINT,
-            false, ORANGE, BLACK
+            false, ORANGE, GREY
         );
         
         self.input.scan();
@@ -131,7 +137,7 @@ impl Menu {
 
         wait_for_vblank();
 
-        push_rect_uniform(MENU_NAME_MAX_RECT, BLACK);
+        Menu::draw_background();
 
         push_rect_uniform(
             ScreenRect::new(
@@ -151,7 +157,7 @@ impl Menu {
         draw_string(
             &format!("high score: {}", score),
             MENU_SCORE_POINT,
-            false, ORANGE, BLACK
+            false, ORANGE, GREY
         );
     }
 
@@ -162,6 +168,8 @@ impl Menu {
         let length = text.len() as u16;
 
         wait_for_vblank();
+
+        Menu::draw_background();
 
         push_rect_uniform(
             ScreenRect::new(
