@@ -123,10 +123,6 @@ impl Menu {
         
         self.input.scan();
         while !(self.input.is_keydown(CONFIRM) || self.input.is_keydown(QUIT)) { self.input.scan(); }
-
-        Self::dramatic_pause();
-
-        self.input.scan();
     }
 
     fn draw_menu(&self) {
@@ -193,9 +189,6 @@ impl Menu {
             clear_high_scores();
         }
 
-        Self::dramatic_pause();
-
-        self.input.scan();
         self.draw_menu();
     }
 
