@@ -36,12 +36,22 @@ impl Menu {
     }
 
     fn prev_index(&mut self) {
-        if self.index != 0 { self.index -= 1; }
+        if self.index == 0 { 
+            self.index = N_MAPS-1;
+        } else {
+            self.index -= 1; 
+        }
+
         self.draw_menu();
     }
 
     fn next_index(&mut self) {
-        if self.index != N_MAPS-1 { self.index += 1; }
+        if self.index == N_MAPS-1 { 
+            self.index = 0
+        } else { 
+            self.index += 1; 
+        }
+
         self.draw_menu();
     }
 
