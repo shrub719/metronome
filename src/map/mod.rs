@@ -1,4 +1,7 @@
-use crate::eadk::display::Color565;
+use crate::{
+    constants::file::*,
+    eadk::display::Color565
+};
 calc_use!(alloc::collections::vec_deque::VecDeque);
 sim_use!(std::collections::VecDeque);
 
@@ -33,7 +36,7 @@ pub struct Event {
 }
 
 pub struct Map {
-    pub notes: VecDeque<Note>,
+    pub notes: VecDeque<Note>
     // pub events: VecDeque<Event>
 }
 
@@ -45,10 +48,10 @@ pub struct MapData {
 }
 
 pub fn load_map(bytes: &[u8]) -> Map {
-    let mut notes = VecDeque::with_capacity(bytes.len() / 13);   // TODO: extract note length
-
+    let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
+    
     let mut i = 0;
-    while i + 13 <= bytes.len() {
+    while i + BINARY_NOTE_LENGTH <= bytes.len() {
         let class_id: char = bytes[i] as char;
 
         let ms = u32::from_le_bytes([
