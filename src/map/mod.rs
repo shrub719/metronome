@@ -24,20 +24,20 @@ pub struct Note {
 #[derive(Clone, Copy)]
 pub enum EventClass {
     // Backlight { fraction: f32, duration: u32 },
-    Shift { displacement: i16 },
-    BGColor { color: Color565 }  // this pleases me
+    // Shift { displacement: i16 },
+    // BGColor { color: Color565 }  // this pleases me
+    BGColor { color: Color565 }
 }
 
 #[derive(Clone, Copy)]
 pub struct Event {
     pub ms: u32,
-    pub duration: u32,
     pub class: EventClass
 }
 
 pub struct Map {
-    pub notes: VecDeque<Note>
-    // pub events: VecDeque<Event>
+    pub notes: VecDeque<Note>,
+    pub events: VecDeque<Event>
 }
 
 #[derive(Clone, Copy)]
@@ -68,6 +68,7 @@ pub fn load_map(index: usize) -> Map {
     let bytes = maps::MAPS[index];
 
     let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
+    let mut events = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
     
     let mut i = BINARY_META_LENGTH;
     while i + BINARY_NOTE_LENGTH <= bytes.len() {
@@ -77,30 +78,54 @@ pub fn load_map(index: usize) -> Map {
             bytes[i+1], bytes[i+2], bytes[i+3], bytes[i+4]
         ]);
 
-        let x = f32::from_le_bytes([
-            bytes[i+5], bytes[i+6], bytes[i+7], bytes[i+8]
-        ]);
+        match class_id {
+            't' | 'h' => {
+                let x = f32::from_le_bytes([
+                    bytes[i+5], bytes[i+6], bytes[i+7], bytes[i+8]
+                ]);
 
-        let note = Note {
-            ms, x,
-            class: match class_id {
-                't' => NoteClass::Tap,
-                'h' => NoteClass::Hold { 
-                    ms_end: u32::from_le_bytes([
-                        bytes[i+9], bytes[i+10], bytes[i+11], bytes[i+12]
-                    ])
-                },
-                _ => NoteClass::Tap
-            }
-        };
+                let note = Note {
+                    ms, x,
+                    class: match class_id {
+                        't' => NoteClass::Tap,
+                        'h' => NoteClass::Hold { 
+                            ms_end: u32::from_le_bytes([
+                                bytes[i+9], bytes[i+10], bytes[i+11], bytes[i+12]
+                            ])
+                        },
+                        _ => unreachable!() // uhhh
+                    }
+                };
 
-        notes.push_back(note);
+                notes.push_back(note);
+            },
+            'e' => {
+                let event = Event {
+                    ms,
+                    class: match class_id {
+                        'e' => {
+                            EventClass::BGColor {
+                                color: Color565::from_rgb(
+                                    u16::from_le_bytes([bytes[i+5], bytes[i+6]]),
+                                    u16::from_le_bytes([bytes[i+7], bytes[i+8]]),
+                                    u16::from_le_bytes([bytes[i+9], bytes[i+10]])
+                                )
+                            }
+                        },
+                        _ => unreachable!()
+                    }
+                };
+
+                events.push_back(event);
+            },
+            _ => panic!("invalid item class")
+        }
 
         i += BINARY_NOTE_LENGTH;
     }
 
 
-    Map { notes }
+    Map { notes, events }
 }
 
 #[macro_export]
