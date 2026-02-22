@@ -1,6 +1,10 @@
+// title: test
+// artist: metronome
+// id: mtn_test
+// bpm: ms
+
 # test
 # should i include names in the mtn headers?
-# nah.
 
 t 1000 0.5
 t 1500 0.1
