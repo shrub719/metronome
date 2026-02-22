@@ -50,8 +50,8 @@ pub struct MapData {
 fn load_str(full_bytes: &[u8], at: usize) -> &str {
     let bytes = &full_bytes[BINARY_STR_LENGTH*at..BINARY_STR_LENGTH*(at+1)];
 
-    let nul_pos = bytes.iter().position(|&b| b == 0).unwrap();
-    str::from_utf8(&bytes[..nul_pos]).unwrap()
+    let nul_pos = bytes.iter().position(|&b| b == 0).expect("non-terminated metadata string");
+    str::from_utf8(&bytes[..nul_pos]).expect("invalid utf-8 in metadata string")
 }
 
 pub fn load_map_data(index: usize) -> MapData {

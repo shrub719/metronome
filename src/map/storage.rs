@@ -13,15 +13,16 @@ pub fn load_high_score(id: &str) -> u32 {
         None => return 0
     };
 
-    let content = str::from_utf8(&binary).unwrap();
+    let content = str::from_utf8(&binary).expect("invalid utf-8 in high score file");
 
     for line in content.split('\n') {
         if line.is_empty() { continue; }
 
         let mut parts = line.split(':');
-        let line_id = parts.next().unwrap();
+        let line_id = parts.next().expect("invalid line in high score file");
         if line_id == id {
-            let score: u32 = parts.next().unwrap().parse().unwrap();
+            let score: u32 = parts.next().expect("invalid line in high score file")
+                .parse().expect("invalid score in high score file");
             return score
         }
     }
@@ -32,7 +33,7 @@ pub fn load_high_score(id: &str) -> u32 {
 pub fn save_high_score(id: &str, score: u32) {
     match file_read(HIGH_SCORE_FILE) {
         Some(binary) => {
-            let content = str::from_utf8(&binary).unwrap();
+            let content = str::from_utf8(&binary).expect("invalid utf-8 in high score file");
             let mut new_binary = Vec::<u8>::with_capacity(20);
             new_binary.push(b'\n');
 
@@ -41,7 +42,7 @@ pub fn save_high_score(id: &str, score: u32) {
                 if line.is_empty() { continue; }
 
                 let mut parts = line.split(':');
-                let line_id = parts.next().unwrap();
+                let line_id = parts.next().expect("invalid line in high score file");
 
                 if line_id == id {
                     let new_line = &format!("{}:{}\n", id, score);
