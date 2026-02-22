@@ -1,5 +1,6 @@
 use crate::{
     map::{
+        *,
         maps::*,
         storage::*
     },
@@ -82,7 +83,7 @@ impl Menu {
     }
 
     fn display_results(&mut self, results: Results) {
-        let map_data = MAP_DATA[self.index];
+        let map_data = load_map_data(self.index);
         let title = map_data.title;
         let artist = map_data.artist;
         let id = map_data.id;
@@ -143,7 +144,7 @@ impl Menu {
     }
 
     fn draw_menu(&self) {
-        let map_data = MAP_DATA[self.index];
+        let map_data = load_map_data(self.index);
         let title = map_data.title;
         let artist = map_data.artist;
         let length = title.len() as u16;

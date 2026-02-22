@@ -6,7 +6,11 @@ pub mod file {
     pub const HIGH_SCORE_FILE: &str = "metronome_high_scores.mth";
     // .py makes it visible, but i don't want tampering (mostly
     // cause it causes errors)
-    pub const BINARY_NOTE_LENGTH: usize = 13;   // in bytes
+
+    // in bytes
+    pub const BINARY_STR_LENGTH: usize = 64;
+    pub const BINARY_META_LENGTH: usize = 3 * BINARY_STR_LENGTH;
+    pub const BINARY_NOTE_LENGTH: usize = 13;
 }
 
 pub mod controls {

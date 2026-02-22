@@ -47,10 +47,29 @@ pub struct MapData {
     pub id: &'static str
 }
 
-pub fn load_map(bytes: &[u8]) -> Map {
+fn load_str(full_bytes: &[u8], at: usize) -> &str {
+    let bytes = &full_bytes[BINARY_STR_LENGTH*at..BINARY_STR_LENGTH*(at+1)];
+
+    let nul_pos = bytes.iter().position(|&b| b == 0).unwrap();
+    str::from_utf8(&bytes[..nul_pos]).unwrap()
+}
+
+pub fn load_map_data(index: usize) -> MapData {
+    let bytes = maps::MAPS[index];
+
+    let title = load_str(bytes, 0);
+    let artist = load_str(bytes, 1);
+    let id = load_str(bytes, 2);
+
+    MapData { title, artist, id }
+}
+
+pub fn load_map(index: usize) -> Map {
+    let bytes = maps::MAPS[index];
+
     let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
     
-    let mut i = 0;
+    let mut i = BINARY_META_LENGTH;
     while i + BINARY_NOTE_LENGTH <= bytes.len() {
         let class_id: char = bytes[i] as char;
 
@@ -77,7 +96,7 @@ pub fn load_map(bytes: &[u8]) -> Map {
 
         notes.push_back(note);
 
-        i += 13;
+        i += BINARY_NOTE_LENGTH;
     }
 
 

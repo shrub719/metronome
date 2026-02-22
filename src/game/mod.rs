@@ -5,10 +5,7 @@ use crate::{
         input::Input, 
         timer::Timer
     },
-    map::{
-        *,
-        maps::MAPS
-    }
+    map::*
 };
 
 mod frame;
@@ -85,7 +82,7 @@ impl Game {
             frame: Frame::new(),
             hold: None,
             results: Results::default(),
-            map: load_map(MAPS[level_index]),
+            map: load_map(level_index),
             finished: false
         }
     }
