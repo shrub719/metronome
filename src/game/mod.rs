@@ -128,6 +128,27 @@ impl Game {
         Frame::draw_judgement(jdg, self.results.score);
     }
 
+    fn check_events(&mut self) {
+        loop {
+            if self.map.events.is_empty() {
+                break;
+            }
+
+            let event = self.map.events[0];
+            if self.timer.ms > event.ms {
+                self.map.events.pop_front();
+
+                match event.class {
+                    EventClass::BGColor { color } => {
+                        self.frame.bg = color;
+                    }
+                };
+            } else {
+                break;
+            }
+        }
+    }
+
     fn judge(&mut self) {
         // cull late notes
         loop {
@@ -198,6 +219,7 @@ impl Game {
         Frame::draw_ms(self.timer.ms);
 
         self.judge(); 
+        self.check_events();
 
         self.frame.reset();
         self.draw_notes();

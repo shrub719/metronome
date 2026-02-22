@@ -12,13 +12,15 @@ calc_use!(alloc::string::ToString);
 calc_use!(alloc::format);
 
 pub struct Frame {
-    buffer: Box<[Color565; BUFFER_SIZE]>
+    buffer: Box<[Color565; BUFFER_SIZE]>,
+    pub bg: Color565
 }
 impl Frame {
     pub fn new() -> Self {
         Self::setup();
         Self {
-            buffer: Box::new([BLACK; BUFFER_SIZE])
+            buffer: Box::new([BLACK; BUFFER_SIZE]),
+            bg: GREY
         }
     }
     
@@ -38,7 +40,7 @@ impl Frame {
     
     fn clear(&mut self) {
         for x in &mut *self.buffer {
-            *x = GREY;
+            *x = self.bg;
         }
     }
 
@@ -62,7 +64,7 @@ impl Frame {
         draw_string(
             &format!("{}", ms), 
             UI_MS_POINT,
-            false, WHITE, GREY
+            false, WHITE, BLACK
         );
     }
 

@@ -201,10 +201,6 @@ pub mod spacing {
 pub mod palette {
     use super::*;
 
-    #[cfg(debug_assertions)]
-    pub const ACCENT: Color565 = Color565::from_rgb(60, 179, 113);
-
-    #[cfg(not(debug_assertions))]
     pub const ACCENT: Color565 = Color565::from_rgb(255, 183, 52);
     //      is the new
     pub const BLACK: Color565 = Color565::from_rgb(0, 0, 0);
