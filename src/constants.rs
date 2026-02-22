@@ -169,7 +169,7 @@ pub mod spacing {
     pub const NOTE_RADIUS: usize = 10;      // yeah
     pub const TAIL_RADIUS: usize = 5;
     pub const JUDGEMENT_LINE_HEIGHT: usize = 25;   // height of judgement line above bottom
-    pub const PX_PER_MS: f32 = 0.4;         // essentially scroll speed
+    pub const PX_PER_MS: f32 = 0.38;         // essentially scroll speed
 
     // buffer
     pub const BUFFER_WIDTH: usize = display::GAME_WIDTH as usize;
