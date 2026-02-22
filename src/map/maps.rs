@@ -1,8 +1,9 @@
 use crate::map::MapData;
 
-pub const N_MAPS: usize = 8;
+pub const N_MAPS: usize = 9;
 
 pub const MAPS: [&[u8]; N_MAPS] = [
+    include_bytes!("../../assets/maps/mtb/mtn_01.mtb"),
     include_bytes!("../../assets/maps/mtb/black_world.mtb"),
     include_bytes!("../../assets/maps/mtb/new_magic_wand.mtb"),
     include_bytes!("../../assets/maps/mtb/test.mtb"),
@@ -14,6 +15,7 @@ pub const MAPS: [&[u8]; N_MAPS] = [
 ];
 
 pub const MAP_DATA: [MapData; N_MAPS] = [
+    MapData { title: "test", artist: "test", id: "mtn_01" },
     MapData { title: "Letter to the Black World", artist: "Frog96", id: "black_world" },
     MapData { title: "NEW MAGIC WAND", artist: "Tyler, The Creator", id: "new_magic_wand" },
     MapData { title: "test! ignore <3", artist: "the metronome test team", id: "test"},
