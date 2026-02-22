@@ -3,14 +3,14 @@ use crate::map::MapData;
 pub const N_MAPS: usize = 8;
 
 pub const MAPS: [&[u8]; N_MAPS] = [
-    include_bytes!("../../target/maps/black_world.mtb"),
-    include_bytes!("../../target/maps/new_magic_wand.mtb"),
-    include_bytes!("../../target/maps/test.mtb"),
-    include_bytes!("../../target/maps/competent.mtb"),
-    include_bytes!("../../target/maps/see_you_again.mtb"),
-    include_bytes!("../../target/maps/balloon.mtb"),
-    include_bytes!("../../target/maps/here_comes_a_thought.mtb"),
-    include_bytes!("../../target/maps/stronger_than_you.mtb")
+    include_bytes!("../../assets/maps/mtb/black_world.mtb"),
+    include_bytes!("../../assets/maps/mtb/new_magic_wand.mtb"),
+    include_bytes!("../../assets/maps/mtb/test.mtb"),
+    include_bytes!("../../assets/maps/mtb/competent.mtb"),
+    include_bytes!("../../assets/maps/mtb/see_you_again.mtb"),
+    include_bytes!("../../assets/maps/mtb/balloon.mtb"),
+    include_bytes!("../../assets/maps/mtb/here_comes_a_thought.mtb"),
+    include_bytes!("../../assets/maps/mtb/stronger_than_you.mtb")
 ];
 
 pub const MAP_DATA: [MapData; N_MAPS] = [
