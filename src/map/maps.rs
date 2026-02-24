@@ -22,8 +22,17 @@ const OSU: MapPack = MapPack {
     color: Color565::from_rgb(255, 84, 155)
 };
 
+#[cfg(feature = "ext")]
+const EXT: MapPack = MapPack {
+    maps: &[include_bytes!("../../assets/maps/mtb/test.mtb")],
+    color: Color565::from_rgb(255, 183, 52)
+};
+
 pub const PACKS: [MapPack; 2] = [
-    METRONOME, OSU
+    METRONOME, OSU,
+
+    #[cfg(feature = "ext")]
+    EXT,
 ];
 
 pub const N_PACKS: usize = PACKS.len();

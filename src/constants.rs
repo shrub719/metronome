@@ -18,12 +18,16 @@ pub mod controls {
 
     // editable
     pub const QUIT: Key = Key::Back;
+
     pub const PREV_MAP: Key = Key::Up;
     pub const NEXT_MAP: Key = Key::Down;
+
     pub const PREV_PACK: Key = Key::Left;
     pub const NEXT_PACK: Key = Key::Right;
+
     pub const CONFIRM: Key = Key::Ok;
     pub const HOME: Key = Key::Home;  
+
     pub const CLEAR: Key = Key::Backspace;
 }
 

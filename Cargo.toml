@@ -16,6 +16,9 @@ name = "metronome"
 path = "src/main.rs"
 crate-type = ["cdylib"]
 
+[features]
+ext = []
+
 [profile.dev]
 panic="abort"
 strip=true

@@ -1,6 +1,11 @@
+#[cfg(feature = "ext")]
+use crate::{
+    map::maps::N_PACKS,
+    eadk::external::get_data
+};
 use crate::{
     constants::file::*,
-    eadk::display::Color565
+    eadk::display::Color565,
 };
 calc_use!(alloc::collections::vec_deque::VecDeque);
 sim_use!(std::collections::VecDeque);
@@ -61,8 +66,17 @@ fn load_str(full_bytes: &[u8], at: usize) -> &str {
     str::from_utf8(&bytes[..nul_pos]).expect("invalid utf-8 in metadata string")
 }
 
+fn load_map(pack_index: usize, map_index: usize) -> Map {
+    #[cfg(feature = "ext")]
+    if pack_index == N_PACKS-1 {
+        return get_data()
+    }
+
+    return maps::PACKS[pack_index].maps[map_index];
+}
+
 pub fn load_map_data(pack_index: usize, map_index: usize) -> MapData {
-    let bytes = maps::PACKS[pack_index].maps[map_index];
+    let bytes = load_map(pack_index, map_index);
 
     let title = load_str(bytes, 0);
     let artist = load_str(bytes, 1);
@@ -72,7 +86,7 @@ pub fn load_map_data(pack_index: usize, map_index: usize) -> MapData {
 }
 
 pub fn load_map_content(pack_index: usize, map_index: usize) -> MapContent {
-    let bytes = maps::PACKS[pack_index].maps[map_index];
+    let bytes = load_map(pack_index, map_index);
 
     let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
     let mut events = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
