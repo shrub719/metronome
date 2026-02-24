@@ -1,5 +1,4 @@
 [target.thumbv7em-none-eabihf]
-runner = 'sudo nwlink install-nwa'
 rustflags = ["-C", "link-arg=--relocatable", "-C", "link-arg=-no-gc-sections", "-C", "link-arg=-lstorage_c"]
 
 [target.'cfg(target_os="macos")']
