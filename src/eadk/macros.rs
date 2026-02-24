@@ -3,7 +3,7 @@ macro_rules! configure_app {
         #[used]
         #[cfg(target_os = "none")]
         #[unsafe(link_section = ".rodata.eadk_app_name")]
-        pub static EADK_APP_NAME: [u8; $app_name_size] = *$app_name;
+        pub static EADK_APP_TITLE: [u8; $app_name_size] = *$app_name;
 
         #[used]
         #[cfg(target_os = "none")]

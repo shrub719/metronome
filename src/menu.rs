@@ -108,16 +108,16 @@ impl Menu {
 
         push_rect_uniform(
             ScreenRect::new(
-                0, RESULT_NAME_RECT_Y,
+                0, RESULT_TITLE_RECT_Y,
                 3*TEXT_PADDING + length*TEXT_WIDTH,
-                RESULT_NAME_RECT_HEIGHT
+                RESULT_TITLE_RECT_HEIGHT
             ),
             ACCENT
         );
 
         draw_string(
             title,
-            RESULT_NAME_POINT,
+            RESULT_TITLE_POINT,
             true, WHITE, ACCENT
         );
 
@@ -156,16 +156,16 @@ impl Menu {
 
         push_rect_uniform(
             ScreenRect::new(
-                0, MENU_NAME_RECT_Y, 
+                0, MENU_TITLE_RECT_Y, 
                 3*TEXT_PADDING + length*TEXT_WIDTH, 
-                MENU_NAME_RECT_HEIGHT
+                MENU_TITLE_RECT_HEIGHT
             ),
             ACCENT
         );
 
         draw_string(
             title, 
-            MENU_NAME_POINT,
+            MENU_TITLE_POINT,
             true, WHITE, ACCENT
         );
 
@@ -194,16 +194,16 @@ impl Menu {
 
         push_rect_uniform(
             ScreenRect::new(
-                0, MENU_NAME_RECT_Y,
+                0, MENU_TITLE_RECT_Y,
                 3*TEXT_PADDING + length*TEXT_WIDTH,
-                RESULT_NAME_RECT_HEIGHT
+                RESULT_TITLE_RECT_HEIGHT
             ),
             RED
         );
 
         draw_string(
             text,
-            MENU_NAME_POINT,
+            MENU_TITLE_POINT,
             true, WHITE, RED
         );
 

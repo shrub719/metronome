@@ -10,7 +10,7 @@ pub mod file {
     // in bytes
     pub const BINARY_STR_LENGTH: usize = 64;
     pub const BINARY_META_LENGTH: usize = 3 * BINARY_STR_LENGTH;
-    pub const BINARY_NOTE_LENGTH: usize = 13;
+    pub const BINARY_ITEM_LENGTH: usize = 13;
 }
 
 pub mod controls {
@@ -95,15 +95,15 @@ pub mod display {
     };
 
     // menu
-    pub const MENU_NAME_Y: u16 = SCREEN_HEIGHT / 2 - TEXT_HEIGHT;
-    pub const MENU_ARTIST_Y: u16 = MENU_NAME_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
-    pub const MENU_SCORE_Y: u16 = MENU_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
+    pub const MENU_TITLE_Y: u16 = SCREEN_HEIGHT / 2 - TEXT_HEIGHT;
+    pub const MENU_ARTIST_Y: u16 = MENU_TITLE_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
+    pub const MENU_SCORE_Y: u16 = MENU_TITLE_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
 
-    pub const MENU_NAME_RECT_Y: u16 = MENU_NAME_Y;
-    pub const MENU_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
+    pub const MENU_TITLE_RECT_Y: u16 = MENU_TITLE_Y;
+    pub const MENU_TITLE_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
 
-    pub const MENU_NAME_POINT: ScreenPoint = ScreenPoint {
-        x: TEXT_PADDING, y: MENU_NAME_Y + TEXT_PADDING
+    pub const MENU_TITLE_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: MENU_TITLE_Y + TEXT_PADDING
     };
 
     pub const MENU_ARTIST_POINT: ScreenPoint = ScreenPoint {
@@ -115,16 +115,16 @@ pub mod display {
     };
 
     // results
-    pub const RESULT_NAME_Y: u16 = SCREEN_HEIGHT / 4 - TEXT_HEIGHT;
-    pub const RESULT_ARTIST_Y: u16 = RESULT_NAME_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
-    pub const RESULT_SCORE_Y: u16 = RESULT_NAME_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
+    pub const RESULT_TITLE_Y: u16 = SCREEN_HEIGHT / 4 - TEXT_HEIGHT;
+    pub const RESULT_ARTIST_Y: u16 = RESULT_TITLE_Y - SMALL_TEXT_HEIGHT - TEXT_PADDING;
+    pub const RESULT_SCORE_Y: u16 = RESULT_TITLE_Y + TEXT_HEIGHT + TEXT_PADDING * 3;
     pub const RESULT_JUDGE_Y: u16 = SCREEN_HEIGHT / 3 * 2;
 
-    pub const RESULT_NAME_RECT_Y: u16 = RESULT_NAME_Y;
-    pub const RESULT_NAME_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
+    pub const RESULT_TITLE_RECT_Y: u16 = RESULT_TITLE_Y;
+    pub const RESULT_TITLE_RECT_HEIGHT: u16 = TEXT_HEIGHT + 2 * TEXT_PADDING;
 
-    pub const RESULT_NAME_POINT: ScreenPoint = ScreenPoint {
-        x: TEXT_PADDING, y: RESULT_NAME_Y + TEXT_PADDING
+    pub const RESULT_TITLE_POINT: ScreenPoint = ScreenPoint {
+        x: TEXT_PADDING, y: RESULT_TITLE_Y + TEXT_PADDING
     };
 
     pub const RESULT_ARTIST_POINT: ScreenPoint = ScreenPoint {

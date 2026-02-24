@@ -67,11 +67,11 @@ pub fn load_map_data(index: usize) -> MapData {
 pub fn load_map(index: usize) -> Map {
     let bytes = maps::MAPS[index];
 
-    let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
-    let mut events = VecDeque::with_capacity(bytes.len() / BINARY_NOTE_LENGTH);
+    let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
+    let mut events = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
     
     let mut i = BINARY_META_LENGTH;
-    while i + BINARY_NOTE_LENGTH <= bytes.len() {
+    while i + BINARY_ITEM_LENGTH <= bytes.len() {
         let class_id: char = bytes[i] as char;
 
         let ms = u32::from_le_bytes([
@@ -121,7 +121,7 @@ pub fn load_map(index: usize) -> Map {
             _ => panic!("invalid item class")
         }
 
-        i += BINARY_NOTE_LENGTH;
+        i += BINARY_ITEM_LENGTH;
     }
 
 
