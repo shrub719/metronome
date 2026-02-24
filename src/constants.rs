@@ -18,8 +18,10 @@ pub mod controls {
 
     // editable
     pub const QUIT: Key = Key::Back;
-    pub const PREV: Key = Key::Up;
-    pub const NEXT: Key = Key::Down;
+    pub const PREV_MAP: Key = Key::Up;
+    pub const NEXT_MAP: Key = Key::Down;
+    pub const PREV_PACK: Key = Key::Left;
+    pub const NEXT_PACK: Key = Key::Right;
     pub const CONFIRM: Key = Key::Ok;
     pub const HOME: Key = Key::Home;  
     pub const CLEAR: Key = Key::Backspace;
@@ -201,7 +203,8 @@ pub mod spacing {
 pub mod palette {
     use super::*;
 
-    pub const ACCENT: Color565 = Color565::from_rgb(255, 183, 52);
+    #[allow(unused)]
+    pub const ORANGE: Color565 = Color565::from_rgb(255, 183, 52);
     //      is the new
     pub const BLACK: Color565 = Color565::from_rgb(0, 0, 0);
 

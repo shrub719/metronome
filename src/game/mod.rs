@@ -71,18 +71,18 @@ pub struct Game {
     frame: Frame,
     hold: Option<Note>,
     results: Results,
-    map: Map,
+    map: MapContent,
     finished: bool
 }
 impl Game {
-    pub fn new(level_index: usize) -> Self {
+    pub fn new(pack_index: usize, map_index: usize, accent: crate::eadk::display::Color565) -> Self {
         Self {
             timer: Timer::new(),
             input: Input::new(),
-            frame: Frame::new(),
+            frame: Frame::new(accent),
             hold: None,
             results: Results::default(),
-            map: load_map(level_index),
+            map: load_map_content(pack_index, map_index),
             finished: false
         }
     }
@@ -125,7 +125,7 @@ impl Game {
         };
 
         self.results.score += jdg.to_score();
-        Frame::draw_judgement(jdg, self.results.score);
+        self.frame.draw_judgement(jdg, self.results.score);
     }
 
     fn check_events(&mut self) {

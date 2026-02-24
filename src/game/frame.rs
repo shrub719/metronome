@@ -13,29 +13,31 @@ calc_use!(alloc::format);
 
 pub struct Frame {
     buffer: Box<[Color565; BUFFER_SIZE]>,
+    pub accent: Color565,
     pub bg: Color565
 }
 impl Frame {
-    pub fn new() -> Self {
-        Self::setup();
+    pub fn new(accent: Color565) -> Self {
+        Self::setup(accent);
         Self {
             buffer: Box::new([BLACK; BUFFER_SIZE]),
+            accent,
             bg: GREY
         }
     }
     
-    fn setup() {
+    fn setup(accent: Color565) {
         wait_for_vblank();
 
         push_rect_uniform(SCREEN_RECT, BLACK);
-        push_rect_uniform(BACKDROP_RECT, ACCENT);
+        push_rect_uniform(BACKDROP_RECT, accent);
         push_rect_uniform(GAME_RECT, GREY);
 
-        push_rect_uniform(UI_JUDGEMENT_RECT, ACCENT);
-        push_rect_uniform(UI_SCORE_RECT, ACCENT);
+        push_rect_uniform(UI_JUDGEMENT_RECT, accent);
+        push_rect_uniform(UI_SCORE_RECT, accent);
 
-        draw_string("ready?", UI_JUDGEMENT_POINT, true, WHITE, ACCENT);
-        draw_string("0", UI_SCORE_POINT, true, WHITE, ACCENT);
+        draw_string("ready?", UI_JUDGEMENT_POINT, true, WHITE, accent);
+        draw_string("0", UI_SCORE_POINT, true, WHITE, accent);
     }
     
     fn clear(&mut self) {
@@ -68,16 +70,16 @@ impl Frame {
         );
     }
 
-    pub fn draw_judgement(jdg: Judgement, score: u32) {
+    pub fn draw_judgement(&self, jdg: Judgement, score: u32) {
         draw_string(
             &jdg.to_str(),
             UI_JUDGEMENT_POINT,
-            true, WHITE, ACCENT
+            true, WHITE, self.accent
         );
         draw_string(
             &score.to_string(),
             UI_SCORE_POINT,
-            true, WHITE, ACCENT
+            true, WHITE, self.accent
         );
     }
 
@@ -87,7 +89,7 @@ impl Frame {
 
         let i = BUFFER_WIDTH*y + x;
         if i > BUFFER_SIZE { return };
-        self.buffer[i] = ACCENT;
+        self.buffer[i] = self.accent;
     }
 
     fn draw_note(&mut self, x: usize, y: usize, r: isize) {

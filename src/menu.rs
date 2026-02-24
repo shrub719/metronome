@@ -22,13 +22,19 @@ calc_use!(alloc::format);
 
 pub struct Menu {
     input: keyboard::InputManager,
-    index: usize
+    accent: Color565,
+    pack_index: usize,
+    pack_length: usize,
+    map_index: usize
 }
 impl Menu {
     pub fn new() -> Self {
         Self {
             input: keyboard::InputManager::new(),
-            index: 0
+            accent: PACKS[0].color,
+            pack_index: 0,
+            pack_length: PACKS[0].maps.len(),
+            map_index: 0
         }
     }
 
@@ -36,23 +42,51 @@ impl Menu {
         push_rect_uniform(SCREEN_RECT, GREY);
     }
 
-    fn prev_index(&mut self) {
-        if self.index == 0 { 
-            self.index = N_MAPS-1;
+    fn prev_map(&mut self) {
+        if self.map_index == 0 { 
+            self.map_index = self.pack_length-1;
         } else {
-            self.index -= 1; 
+            self.map_index -= 1; 
         }
 
         self.draw_menu();
     }
 
-    fn next_index(&mut self) {
-        if self.index == N_MAPS-1 { 
-            self.index = 0
+    fn next_map(&mut self) {
+        if self.map_index == self.pack_length-1 { 
+            self.map_index = 0
         } else { 
-            self.index += 1; 
+            self.map_index += 1; 
         }
 
+        self.draw_menu();
+    }
+
+    fn pack_update(&mut self) {
+        self.accent = PACKS[self.pack_index].color;
+        self.pack_length = PACKS[self.pack_index].maps.len();
+        self.map_index = 0;
+    }
+
+    fn prev_pack(&mut self) {
+        if self.pack_index == 0 {
+            self.pack_index = N_PACKS-1;
+        } else {
+            self.pack_index -= 1;
+        }
+
+        self.pack_update();
+        self.draw_menu();
+    }
+
+    fn next_pack(&mut self) {
+        if self.pack_index == N_PACKS-1 {
+            self.pack_index = 0;
+        } else {
+            self.pack_index += 1;
+        }
+
+        self.pack_update();
         self.draw_menu();
     }
 
@@ -69,7 +103,7 @@ impl Menu {
     fn start_game(&mut self) {
         Self::dramatic_pause();
 
-        let mut game = Game::new(self.index);
+        let mut game = Game::new(self.pack_index, self.map_index, self.accent);
         let results = game.main_loop();
 
         Self::dramatic_pause();
@@ -83,7 +117,7 @@ impl Menu {
     }
 
     fn display_results(&mut self, results: Results) {
-        let map_data = load_map_data(self.index);
+        let map_data = load_map_data(self.pack_index, self.map_index);
         let title = map_data.title;
         let artist = map_data.artist;
         let id = map_data.id;
@@ -112,31 +146,31 @@ impl Menu {
                 3*TEXT_PADDING + length*TEXT_WIDTH,
                 RESULT_TITLE_RECT_HEIGHT
             ),
-            ACCENT
+            self.accent
         );
 
         draw_string(
             title,
             RESULT_TITLE_POINT,
-            true, WHITE, ACCENT
+            true, WHITE, self.accent
         );
 
         draw_string(
             artist,
             RESULT_ARTIST_POINT,
-            false, ACCENT, GREY
+            false, self.accent, GREY
         );
 
         draw_string(
             &score_text,
             RESULT_SCORE_POINT,
-            false, ACCENT, GREY
+            false, self.accent, GREY
         );
 
         draw_string(
             &judge,
             RESULT_JUDGE_POINT,
-            false, ACCENT, GREY
+            false, self.accent, GREY
         );
         
         self.input.scan();
@@ -144,7 +178,7 @@ impl Menu {
     }
 
     fn draw_menu(&self) {
-        let map_data = load_map_data(self.index);
+        let map_data = load_map_data(self.pack_index, self.map_index);
         let title = map_data.title;
         let artist = map_data.artist;
         let length = title.len() as u16;
@@ -160,25 +194,25 @@ impl Menu {
                 3*TEXT_PADDING + length*TEXT_WIDTH, 
                 MENU_TITLE_RECT_HEIGHT
             ),
-            ACCENT
+            self.accent
         );
 
         draw_string(
             title, 
             MENU_TITLE_POINT,
-            true, WHITE, ACCENT
+            true, WHITE, self.accent
         );
 
         draw_string(
             artist,
             MENU_ARTIST_POINT,
-            false, ACCENT, GREY
+            false, self.accent, GREY
         );
 
         draw_string(
             &format!("high score: {}", score),
             MENU_SCORE_POINT,
-            false, ACCENT, GREY
+            false, self.accent, GREY
         );
     }
 
@@ -226,8 +260,10 @@ impl Menu {
         while !self.input.is_keydown(HOME) {
             self.input.scan();
             match self.input.get_last_pressed() {
-                Some(PREV) => self.prev_index(),
-                Some(NEXT) => self.next_index(),
+                Some(PREV_MAP) => self.prev_map(),
+                Some(NEXT_MAP) => self.next_map(),
+                Some(PREV_PACK) => self.prev_pack(),
+                Some(NEXT_PACK) => self.next_pack(),
                 Some(CONFIRM) => self.start_game(),
                 Some(CLEAR) => self.check_clear_scores(),
                 _ => ()

@@ -35,7 +35,7 @@ pub struct Event {
     pub class: EventClass
 }
 
-pub struct Map {
+pub struct MapContent {
     pub notes: VecDeque<Note>,
     pub events: VecDeque<Event>
 }
@@ -47,6 +47,13 @@ pub struct MapData {
     pub id: &'static str
 }
 
+pub type Map = &'static [u8];
+
+pub struct MapPack {
+    pub maps: &'static [Map],
+    pub color: Color565
+}
+
 fn load_str(full_bytes: &[u8], at: usize) -> &str {
     let bytes = &full_bytes[BINARY_STR_LENGTH*at..BINARY_STR_LENGTH*(at+1)];
 
@@ -54,8 +61,8 @@ fn load_str(full_bytes: &[u8], at: usize) -> &str {
     str::from_utf8(&bytes[..nul_pos]).expect("invalid utf-8 in metadata string")
 }
 
-pub fn load_map_data(index: usize) -> MapData {
-    let bytes = maps::MAPS[index];
+pub fn load_map_data(pack_index: usize, map_index: usize) -> MapData {
+    let bytes = maps::PACKS[pack_index].maps[map_index];
 
     let title = load_str(bytes, 0);
     let artist = load_str(bytes, 1);
@@ -64,8 +71,8 @@ pub fn load_map_data(index: usize) -> MapData {
     MapData { title, artist, id }
 }
 
-pub fn load_map(index: usize) -> Map {
-    let bytes = maps::MAPS[index];
+pub fn load_map_content(pack_index: usize, map_index: usize) -> MapContent {
+    let bytes = maps::PACKS[pack_index].maps[map_index];
 
     let mut notes = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
     let mut events = VecDeque::with_capacity(bytes.len() / BINARY_ITEM_LENGTH);
@@ -125,7 +132,7 @@ pub fn load_map(index: usize) -> Map {
     }
 
 
-    Map { notes, events }
+    MapContent { notes, events }
 }
 
 #[macro_export]
