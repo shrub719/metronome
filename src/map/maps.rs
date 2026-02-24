@@ -30,7 +30,6 @@ const EXT: MapPack = MapPack {
 
 #[cfg(feature = "ext")]
 pub const PACKS: [MapPack; 3] = [
-    METRONOME, OSU,
     EXT,
 ];
 
