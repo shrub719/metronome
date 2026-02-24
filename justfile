@@ -37,7 +37,7 @@ nwb-dev-run: nwb-dev
 # ===== MAPS =====
 
 convert-osu id:
-    python3 ./build/converter.py ./osu/{{id}}.osu ./assets/maps/mtn/{{id}}.mtn
+    python3 ./build/converter.py ./osu/{{id}}.osu ./assets/maps/mtn/osu_pack/{{id}}.mtn
 
 poly id:
     ./poly/mtn-polyrhythm ./assets/maps/mtn/{{id}}.mtn -o ./assets/maps/mtb/{{id}}.mtb
