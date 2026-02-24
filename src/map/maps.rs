@@ -13,9 +13,9 @@ const OSU: MapPack = MapPack {
     maps: &[
         include_bytes!("../../assets/maps/mtb/black_world.mtb"),
         include_bytes!("../../assets/maps/mtb/new_magic_wand.mtb"),
-        include_bytes!("../../assets/maps/mtb/competent.mtb"),
         include_bytes!("../../assets/maps/mtb/see_you_again.mtb"),
         include_bytes!("../../assets/maps/mtb/balloon.mtb"),
+        include_bytes!("../../assets/maps/mtb/competent.mtb"),
         include_bytes!("../../assets/maps/mtb/here_comes_a_thought.mtb"),
         include_bytes!("../../assets/maps/mtb/stronger_than_you.mtb"),
     ],
