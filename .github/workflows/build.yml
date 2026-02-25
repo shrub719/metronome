@@ -36,7 +36,6 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
-          toolchain: nightly    
           target: thumbv7em-none-eabihf
 
       - name: Install just
