@@ -39,6 +39,11 @@ jobs:
           toolchain: stable
           target: thumbv7em-none-eabihf
 
+      - name: Install polyrhythm
+        uses: taiki-e/cache-cargo-install-action@v3
+        with:
+          tool: mtn-poly
+
       - name: Clone maps
         run: git clone https://github.com/shrub719/mtn-maps
 
