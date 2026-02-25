@@ -13,11 +13,11 @@ dev:
 
 # loads app to calculator
 load: build
-    sudo nwlink install-nwa ./target/release/{{name}}
+    sudo nwlink install-nwa ./target/thumbv7em-none-eabihf/release/{{name}}
 
 # loads dev profile to calculator
 dev-load: dev
-    sudo nwlink install-nwa ./target/debug/{{name}}
+    sudo nwlink install-nwa ./target/thumbv7em-none-eabihf/debug/{{name}}
 
 
 # ===== SIMULATOR =====
