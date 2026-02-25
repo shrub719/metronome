@@ -4,6 +4,4 @@ target/
 just.sh
 simulator/
 test/
-osu/
-poly/
-assets/maps/mtn/
+mtn-maps/
