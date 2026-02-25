@@ -36,6 +36,7 @@ jobs:
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
+          toolchain: stable
           target: thumbv7em-none-eabihf
 
       - name: Clone maps
