@@ -1,6 +1,6 @@
 [package]
 name = "metronome"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["shrub719"]
 edition = "2024"
 build = "build/build.rs"

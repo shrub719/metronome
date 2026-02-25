@@ -58,6 +58,11 @@ jobs:
           cargo build --release --bin metronome --target=thumbv7em-none-eabihf
           mv target/thumbv7em-none-eabihf/release/metronome target/output/metronome.nwa
 
+      - name: Build nwa w/ ext
+        run: |
+          cargo build --release --bin metronome --target=thumbv7em-none-eabihf --features ext
+          mv target/thumbv7em-none-eabihf/release/metronome target/output/metronome_ext.nwa
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
