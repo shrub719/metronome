@@ -38,9 +38,15 @@ jobs:
         with:
           target: thumbv7em-none-eabihf
 
+      - name: Clone maps
+        run: git clone https://github.com/shrub719/mtn-maps
+
+      - name: Compile maps
+        run: python3 ./build/maps.py
+        
       - name: Prepare for building
         run: mkdir -p target/output
-        
+
       - name: Build nwa
         run: |
           cargo build --release --bin metronome --target=thumbv7em-none-eabihf
