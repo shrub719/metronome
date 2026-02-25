@@ -25,7 +25,7 @@ const OSU: MapPack = MapPack {
 
 #[cfg(feature = "ext")]
 const EXT: MapPack = MapPack {
-    maps: &[include_bytes!("../../assets/maps/mtb/test.mtb")],
+    maps: &[include_bytes!("../../assets/maps/metronome/test.mtb")],
     color: Color565::from_rgb(255, 183, 52)
 };
 
