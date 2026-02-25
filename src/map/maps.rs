@@ -20,7 +20,7 @@ const OSU: MapPack = MapPack {
         include_bytes!("../../assets/maps/osu/here_comes_a_thought.mtb"),
         include_bytes!("../../assets/maps/osu/stronger_than_you.mtb"),
     ],
-    color: Color565::from_rgb(255, 84, 155)
+    color: Color565::from_rgb(255, 102, 170)
 };
 
 #[cfg(feature = "ext")]
