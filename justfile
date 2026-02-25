@@ -4,11 +4,11 @@ name := "metronome"
 # ===== DEVICE =====
 
 # builds release profile
-build:
+build: maps
     cargo build --release --bin {{name}} --target=thumbv7em-none-eabihf
 
 # builds dev profile
-dev:
+dev: maps
     cargo build --bin {{name}} --target=thumbv7em-none-eabihf
 
 # loads app to calculator
@@ -23,7 +23,7 @@ dev-load: dev
 # ===== SIMULATOR =====
 
 # builds dev profile for simulator
-sim-dev:
+sim-dev: maps
     cargo build --lib --target={{current_target}}
 
 # run dev profile on simulator
@@ -34,6 +34,11 @@ sim-dev-run: sim-dev
 sim-dev-run: sim-dev
     ./simulator/epsilon.bin --nwb ./target/{{current_target}}/debug/lib{{name}}.so
 
+
+# ===== MAPS =====
+
+maps:
+    python3 ./build/maps.py 
 
 # ===== UTILS =====
 

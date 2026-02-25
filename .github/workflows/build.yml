@@ -38,15 +38,12 @@ jobs:
         with:
           target: thumbv7em-none-eabihf
 
-      - name: Install just
-        uses: extractions/setup-just@v3
-
       - name: Prepare for building
         run: mkdir -p target/output
         
       - name: Build nwa
         run: |
-          just build
+          cargo build --release --bin metronome --target=thumbv7em-none-eabihf
           mv target/thumbv7em-none-eabihf/release/metronome target/output/metronome.nwa
 
       - name: Upload build artifacts
