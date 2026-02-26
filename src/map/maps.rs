@@ -29,11 +29,15 @@ const EXT: MapPack = MapPack {
     color: Color565::from_rgb(255, 183, 52)
 };
 
+#[cfg(not(feature = "map-test"))]
 #[cfg(feature = "ext")]
 pub const PACKS: [MapPack; 3] = [
     METRONOME, OSU,
     EXT,
 ];
+
+#[cfg(feature = "map-test")]
+pub const PACKS: [MapPack; 1] = [EXT];
 
 #[cfg(not(feature = "ext"))]
 pub const PACKS: [MapPack; 2] = [
