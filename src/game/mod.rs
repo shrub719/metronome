@@ -8,6 +8,8 @@ use crate::{
     map::*
 };
 
+calc_use!(alloc::vec::Vec);
+
 mod frame;
 mod timer;
 mod input;
@@ -69,7 +71,7 @@ pub struct Game {
     timer: Timer,
     input: Input,
     frame: Frame,
-    hold: Option<Note>,
+    hold: Vec<Note>,    // TODO: JUST hold notes?
     results: Results,
     map: MapContent,
     finished: bool
@@ -80,7 +82,7 @@ impl Game {
             timer: Timer::new(),
             input: Input::new(),
             frame: Frame::new(accent),
-            hold: None,
+            hold: Vec::with_capacity(4),
             results: Results::default(),
             map: load_map_content(pack_index, map_index),
             finished: false
@@ -107,12 +109,14 @@ impl Game {
             };
         }
 
-        match self.hold {
-            Some(Note { ms: _, x, class: NoteClass::Hold { ms_end } }) => {
-                let ms_until_end =  ms_end as i32 - self.timer.ms as i32;   // uhhh need so much i32?
-                self.frame.draw_hold(x, 0, ms_until_end)
-            }
-            _ => ()
+        for note in &self.hold {
+            match note {
+                Note { ms: _, x, class: NoteClass::Hold { ms_end } } => {
+                    let ms_until_end = *ms_end as i32 - self.timer.ms as i32;   // uhhh need so much i32?
+                    self.frame.draw_hold(*x, 0, ms_until_end)
+                },
+                _ => panic!()
+            };
         };
     }
 
@@ -167,21 +171,27 @@ impl Game {
         }
 
         // check hold notes
-        match self.hold {
-            Some(Note { ms: _, x: _, class: NoteClass::Hold { ms_end } }) => {  // i cannot BELIEVE this works
-                if self.timer.ms > ms_end {
-                    self.hold = None;
-                    self.register_judgement(Judgement::Perfect);
-                } else if !self.input.holding {
-                    self.hold = None;
-                    if ms_end - self.timer.ms < judgement::GOOD as u32 {
+        let mut j = 1;
+        for note in self.hold.clone() {
+            match note {
+                Note { ms: _, x: _, class: NoteClass::Hold { ms_end } } => {
+                    if self.timer.ms > ms_end {
+                        self.hold.remove(j-1);
+                        j -= 1;
                         self.register_judgement(Judgement::Perfect);
-                    } else { 
-                        self.register_judgement(Judgement::Miss);
+                    } else if !self.input.holding {
+                        self.hold.clear();
+                        if self.hold.len() == 1 && ms_end - self.timer.ms < judgement::GOOD as u32 {
+                            self.register_judgement(Judgement::Perfect);
+                        } else { 
+                            self.register_judgement(Judgement::Miss);
+                        }
+                        break;
                     }
-                }
-            },
-            _ => ()
+                },
+                _ => panic!()
+            };
+            j += 1;
         };
 
         // hit nearest notes
@@ -200,7 +210,7 @@ impl Game {
                 
                 if !matches!(jdg, Judgement::Miss) {
                     if matches!(note.class, NoteClass::Hold { ms_end: _ }) {
-                        self.hold = Some(note);
+                        self.hold.push(note);
                     }
                 }
 
@@ -208,7 +218,7 @@ impl Game {
             }
         }
 
-        self.finished = self.map.notes.is_empty() && self.hold.is_none();
+        self.finished = self.map.notes.is_empty() && self.hold.is_empty();
     }
 
     fn update(&mut self) {

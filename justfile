@@ -4,11 +4,11 @@ name := "metronome"
 # ===== DEVICE =====
 
 # builds release profile
-build: maps
+build:
     cargo build --release --bin {{name}} --target=thumbv7em-none-eabihf
 
 # builds dev profile
-dev: maps
+dev:
     cargo build --bin {{name}} --target=thumbv7em-none-eabihf
 
 # loads app to calculator
@@ -23,7 +23,7 @@ dev-load: dev
 # ===== SIMULATOR =====
 
 # builds dev profile for simulator
-sim-dev: maps
+sim-dev:
     cargo build --lib --target={{current_target}}
 
 # run dev profile on simulator
