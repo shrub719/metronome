@@ -176,17 +176,17 @@ impl Game {
             match note {
                 Note { ms: _, x: _, class: NoteClass::Hold { ms_end } } => {
                     if self.timer.ms > ms_end {
-                        self.hold.remove(j-1);
+                        self.hold.remove(j-1);  // hmmm
                         j -= 1;
                         self.register_judgement(Judgement::Perfect);
                     } else if !self.input.holding {
-                        self.hold.clear();
-                        if self.hold.len() == 1 && ms_end - self.timer.ms < judgement::GOOD as u32 {
+                        self.hold.remove(j-1);
+                        j -= 1;
+                        if ms_end - self.timer.ms < judgement::GOOD as u32 {
                             self.register_judgement(Judgement::Perfect);
                         } else { 
                             self.register_judgement(Judgement::Miss);
                         }
-                        break;
                     }
                 },
                 _ => panic!()
