@@ -38,6 +38,7 @@ sim-dev-run: sim-dev
 # ===== MAPS =====
 
 maps:
+    cd mtn-maps && git pull
     python3 ./build/maps.py 
 
 # ===== UTILS =====
