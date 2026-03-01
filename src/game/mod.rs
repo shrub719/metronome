@@ -225,8 +225,13 @@ impl Game {
         self.timer.update();
         self.input.update();
 
-        #[cfg(debug_assertions)]
+        #[cfg(any(debug_assertions, feature = "map-test"))]
         Frame::draw_ms(self.timer.ms);
+
+        #[cfg(all(not(target_os = "none"), feature = "map-test"))]
+        if self.input.n_hits > 0 {
+            println!("{}", self.timer.ms);
+        }
 
         self.judge(); 
         self.check_events();
