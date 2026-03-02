@@ -85,6 +85,16 @@ pub fn load_map_data(pack_index: usize, map_index: usize) -> MapData {
     MapData { title, artist, id }
 }
 
+#[cfg(target_os = "none")]
+fn adjust_ms(ms: u32) -> u32 {
+    (ms as f32 * 0.995) as u32
+}
+
+#[cfg(not(target_os = "none"))]
+fn adjust_ms(ms: u32) -> u32 {
+    ms
+}
+
 pub fn load_map_content(pack_index: usize, map_index: usize) -> MapContent {
     let bytes = load_map(pack_index, map_index);
 
@@ -95,9 +105,9 @@ pub fn load_map_content(pack_index: usize, map_index: usize) -> MapContent {
     while i + BINARY_ITEM_LENGTH <= bytes.len() {
         let class_id: char = bytes[i] as char;
 
-        let ms = u32::from_le_bytes([
+        let ms = adjust_ms(u32::from_le_bytes([
             bytes[i+1], bytes[i+2], bytes[i+3], bytes[i+4]
-        ]);
+        ]));
 
         match class_id {
             't' | 'h' => {
@@ -110,9 +120,9 @@ pub fn load_map_content(pack_index: usize, map_index: usize) -> MapContent {
                     class: match class_id {
                         't' => NoteClass::Tap,
                         'h' => NoteClass::Hold { 
-                            ms_end: u32::from_le_bytes([
+                            ms_end: adjust_ms(u32::from_le_bytes([
                                 bytes[i+9], bytes[i+10], bytes[i+11], bytes[i+12]
-                            ])
+                            ]))
                         },
                         _ => unreachable!() // uhhh
                     }
