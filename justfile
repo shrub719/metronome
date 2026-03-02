@@ -7,6 +7,9 @@ name := "metronome"
 build:
     cargo build --release --bin {{name}} --target=thumbv7em-none-eabihf
 
+ext-build:
+    cargo build --release --bin {{name}} --target=thumbv7em-none-eabihf --features ext
+
 # builds dev profile
 dev:
     cargo build --bin {{name}} --target=thumbv7em-none-eabihf
@@ -14,6 +17,9 @@ dev:
 # loads app to calculator
 load: build
     sudo nwlink install-nwa ./target/thumbv7em-none-eabihf/release/{{name}}
+
+ext-load file: ext-build
+    sudo nwlink install-nwa ./target/thumbv7em-none-eabihf/release/{{name}} -d {{file}}
 
 # loads dev profile to calculator
 dev-load: dev
@@ -25,6 +31,11 @@ dev-load: dev
 # builds dev profile for simulator
 sim-dev:
     cargo build --lib --target={{current_target}}
+
+sim-test:
+    cargo build --lib --target={{current_target}} --features map-test
+    cp ./target/{{current_target}}/debug/lib{{name}}.so ./lib{{name}}.so
+    @echo "copied build to ./lib{{name}}.so"
 
 # run dev profile on simulator
 [macos]
@@ -43,7 +54,7 @@ maps:
 
 # ===== UTILS =====
 
-sim: sim-dev-run
+s: sim-dev-run
 
 clean:
     cargo clean
