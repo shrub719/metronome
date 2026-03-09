@@ -11,15 +11,22 @@ const METRONOME: MapPack = MapPack {
     color: Color565::from_rgb(255, 183, 52)
 };
 
+const VOCALOID: MapPack = MapPack {
+    maps: &[
+        include_bytes!("../../assets/maps/vocaloid/ego.mtb"),
+        include_bytes!("../../assets/maps/vocaloid/birdbrain.mtb"),
+        include_bytes!("../../assets/maps/vocaloid/spoken_for.mtb"),
+        include_bytes!("../../assets/maps/vocaloid/black_world.mtb")
+    ],
+    color: Color565::from_rgb(0, 221, 192)
+};
+
 const OSU: MapPack = MapPack {
     maps: &[
-        include_bytes!("../../assets/maps/osu/black_world.mtb"),
-        include_bytes!("../../assets/maps/osu/spoken_for.mtb"),
-        include_bytes!("../../assets/maps/osu/birdbrain.mtb"),
         include_bytes!("../../assets/maps/osu/new_magic_wand.mtb"),
         include_bytes!("../../assets/maps/osu/see_you_again.mtb"),
         include_bytes!("../../assets/maps/osu/here_comes_a_thought.mtb"),
-        include_bytes!("../../assets/maps/osu/stronger_than_you.mtb"),
+        include_bytes!("../../assets/maps/osu/stronger_than_you.mtb")
     ],
     color: Color565::from_rgb(255, 102, 170)
 };
@@ -32,8 +39,8 @@ const EXT: MapPack = MapPack {
 
 #[cfg(not(feature = "map-test"))]
 #[cfg(feature = "ext")]
-pub const PACKS: [MapPack; 3] = [
-    METRONOME, OSU,
+pub const PACKS: [MapPack; 4] = [
+    METRONOME, VOCALOID, OSU,
     EXT,
 ];
 
@@ -41,8 +48,8 @@ pub const PACKS: [MapPack; 3] = [
 pub const PACKS: [MapPack; 1] = [EXT];
 
 #[cfg(not(feature = "ext"))]
-pub const PACKS: [MapPack; 2] = [
-    METRONOME, OSU,
+pub const PACKS: [MapPack; 3] = [
+    METRONOME, VOCALOID, OSU
 ];
 
 pub const N_PACKS: usize = PACKS.len();
