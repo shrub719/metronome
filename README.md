@@ -39,7 +39,8 @@ An invalid `.mtb` file will cause your program to crash and may erase your save 
 
 ## Controls
 
-- Use **D-pad Up/Down** to select a song
+- Use **D-pad Up/Down** to select a map
+- User **D-pad Left/Right** to switch map packs
 - Navigate with **Ok**/**Back**
 - Exit with **Home**
 - **Backspace** to clear all scores (**Ok** confirm/**Back** cancel)
@@ -60,12 +61,12 @@ In game, **press any key.**
 - Clone the [map files](https://github.com/shrub719/mtn-maps) into a subdirectory called `mtn-maps`
 - Run `just maps` to compile all the base maps
 
-### Calculator
+### Compiling
 
-- Run `just build` to build the game
-- Run `just load` to load the app to a connected NumWorks calculator
-- Run `just ext-build` to build with external map support
-- Run `just ext-load {file}` to load with the provided `.mtb` file as a data file
+- `just build`: build the game
+- `just load`: load the app to a connected NumWorks calculator
+- `just ext-build`: build with external map support
+- `just ext-load {file}`: load with the provided `.mtb` file as a data file
 
 <!-- TODO: yk.. simulator.. -->
 
