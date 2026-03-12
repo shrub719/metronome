@@ -8,6 +8,8 @@
 
 A silent rhythm game for the NumWorks calculator.
 
+[**maps**](https://github.com/shrub719/mtn-maps) [**polyrhythm**](https://github.com/shrub719/mtn-poly)
+
 ## Installation
 
 1. Go to the [latest release](https://github.com/shrub719/metronome/releases/latest)
