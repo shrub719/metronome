@@ -8,7 +8,7 @@
 
 A silent rhythm game for the NumWorks calculator.
 
-[**maps**](https://github.com/shrub719/mtn-maps) [**polyrhythm**](https://github.com/shrub719/mtn-poly)
+**[maps](https://github.com/shrub719/mtn-maps). [polyrhythm](https://github.com/shrub719/mtn-poly).**
 
 ## Installation
 
